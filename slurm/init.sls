@@ -22,6 +22,7 @@ slurm_config:
 slurm_user:
   user.present:
     - name: slurm
+    - system: True
 {% if slurm.homedir is defined %}
     - home: {{ slurm.user_homedir }}
 {% endif %}
