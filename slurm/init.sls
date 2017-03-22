@@ -5,7 +5,7 @@
 slurm_client:
   pkg.installed:
     - pkgs: {{ slurm.client_pkgs }}
-    - refresh: True
+    - skip_verify: true
 
 slurm_config:
   file.managed:

@@ -9,5 +9,6 @@ slrum_checkpoint_pkgs:
     - pkgs:
       - slurm-blcr
       - blcr
+    - skip_verify: true
 {% endif %}
 

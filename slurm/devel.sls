@@ -10,4 +10,5 @@ slurm_devel:
   {% if slurm.devel_pkgs != [] %}
   pkg.installed:
     - pkgs: {{ slurm.devel_pkgs }}
+    - skip_verify: true
   {% endif %}
