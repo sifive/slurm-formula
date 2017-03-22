@@ -9,7 +9,6 @@ include:
 slurm_db:
   pkg.installed:
     - pkgs: {{ slurm.db_pkgs }}
-    - skip_verify: true
   service.running:
     - enable: True
     - name: {{ slurm.slurmdbd }}
