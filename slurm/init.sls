@@ -46,6 +46,7 @@ slurm_user:
 slurm_munge:
   pkg.installed:
     - pkgs: {{ slurm.munge_pkgs }}
+    - skip_verify: true
   service.running:
     - name: munge
     - enambe: true
