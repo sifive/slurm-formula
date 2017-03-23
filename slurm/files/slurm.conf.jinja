@@ -41,6 +41,7 @@ SlurmUser=slurm
 {{ slurmconf('SlurmdUser', 'root') -}}
 {{ slurmconf('SlurmctldPort', '6817') -}}
 {{ slurmconf('SlurmdPort', '6818') -}}
+{{ slurmconf('SrunPortRange', '') -}}
 {{ slurmconf_always('SlurmdSpoolDir', slurm.slurmddir) }}
 {{ slurmconf_always('StateSaveLocation', slurm.slurmctlddir) }}
 {{ slurmconf_always('JobCheckpointDir', slurm.slurmctlddir) }}
