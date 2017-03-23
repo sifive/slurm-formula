@@ -103,12 +103,12 @@ slurm_munge_service_config:
 
 slurm_srun_x:
   file.managed:
-    name: {{slurm.bindir}}/srun-x
-    template: jinja
-    source: salt://slurm/files/srun-x.sh.jinja
-    user: 'root'
-    group: 'root'
-    mode: '0755'
+    - name: {{slurm.bindir}}/srun-x
+    - template: jinja
+    - source: salt://slurm/files/srun-x.sh.jinja
+    - user: 'root'
+    - group: 'root'
+    - mode: '0755'
 
 slurm_screen:
   pkg.installed:
