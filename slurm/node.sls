@@ -95,20 +95,20 @@ slurm_config_energy:
 
 slurm_srun_x_start:
   file.managed:
-    name: {{slurm.bindir}}/srun-x-start
-    template: jinja
-    source: salt://slurm/files/srun-x-start.sh.jinja
-    user: 'root'
-    group: 'root'
-    mode: '0755'
+    - name: {{slurm.bindir}}/srun-x-start
+    - template: jinja
+    - source: salt://slurm/files/srun-x-start.sh.jinja
+    - user: 'root'
+    - group: 'root'
+    - mode: '0755'
 
 slurm_srun_x_session:
   file.managed:
-    name: {{slurm.bindir}}/srun-x-session
-    template: jinja
-    source: salt://slurm/files/srun-x-session.sh.jinja
-    user: 'root'
-    group: 'root'
-    mode: '0755'
+    - name: {{slurm.bindir}}/srun-x-session
+    - template: jinja
+    - source: salt://slurm/files/srun-x-session.sh.jinja
+    - user: 'root'
+    - group: 'root'
+    - mode: '0755'
 
 {% endif %}
