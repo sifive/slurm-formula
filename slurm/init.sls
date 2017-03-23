@@ -106,6 +106,8 @@ slurm_srun_x:
     - name: {{slurm.bindir}}/srun-x
     - template: jinja
     - source: salt://slurm/files/srun-x.sh.jinja
+    - context:
+        slurm: {{ slurm }}
     - user: 'root'
     - group: 'root'
     - mode: '0755'
