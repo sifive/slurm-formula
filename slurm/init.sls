@@ -97,3 +97,21 @@ slurm_munge_service_config:
         - pkg: slurm_munge
 {% endif %}
 
+## X login client utility if slurm:X is true
+
+{% if salt['pillar.get']('slurm:X', True) %}
+
+slurm_srun_x:
+  file.managed:
+    name: {{slurm.bindir}}/srun-x
+    template: jinja
+    source: salt://slurm/files/srun-x.sh.jinja
+    user: 'root'
+    group: 'root'
+    mode: '0755'
+
+slurm_screen:
+  pkg.installed:
+    - pkgs: {{ slurm.screen_pkgs }}
+
+{% endif %}

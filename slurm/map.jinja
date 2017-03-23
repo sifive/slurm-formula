@@ -1,6 +1,7 @@
 {% set slurm = salt['grains.filter_by'](
   {
   'RedHat': {
+        'bindir': '/usr/bin',
         'use_cgroup': False,
         'server': 'slurmctld',
         'server_bin': '/usr/sbin/slurmctld',
@@ -26,9 +27,10 @@
         'pam_pkgs':['slurm-pam_slurm'],
         'devel_pkgs': ['slurm-devel'],
         'sql_pkgs': ['slurm-sql'],
-
+	'screen_pkgs': ['screen'],
         },
   'Debian': {
+        'bindir': '/usr/bin',
         'use_cgroup': True,
         'server': 'slurmctld',
         'server_bin': '/usr/sbin/slurmctld',
@@ -55,6 +57,7 @@
 	'pam_pkgs': ['slurm-pam_slurm'],
         'devel_pkgs': ['libslurm-dev', 'libslurm-perl'],
 	'db_devel_pkgs': ['libslurmdb-dev', 'libslurmdb-perl'],
+	'screen_pkgs': ['screen'],
         },
   
   },merge=salt['pillar.get']('slurm:lookup'))

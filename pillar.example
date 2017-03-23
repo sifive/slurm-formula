@@ -31,6 +31,7 @@ slurm:
   ProctrackType: 'cgroup'
   MailProg: '/bin/mail'
   AcctGatherEnergyType: 'ipmi'
+  X: true
   Frontends:
     frontend01:
       State: UNKNOWN
