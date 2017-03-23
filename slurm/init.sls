@@ -49,7 +49,7 @@ slurm_munge:
     - skip_verify: true
   service.running:
     - name: munge
-    - enambe: true
+    - enable: true
     - watch:
       - file: slurm_munge_key
     - require:
