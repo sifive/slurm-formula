@@ -51,7 +51,7 @@ slurm_munge:
     - name: munge
     - enable: true
     - watch:
-      - file: slurm_munge_key
+      - cmd: slurm_munge_key
     - require:
       - pkg: slurm_munge
     - require_in:
