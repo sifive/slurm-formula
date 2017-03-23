@@ -71,10 +71,10 @@ slurm_munge_key:
   cmd.wait:
     - name: base64 -d /etc/munge/munge.key64 >/etc/munge/munge.key
     - watch:
-        - file: /etc/munge/munge.key64
+        - file: slurm_munge_key64
   file.managed:
     - name: /etc/munge/munge.key
-    - requre:
+    - require:
         - cmd: slurm_munge_key
     - replace: false
     - mode: '0400'
