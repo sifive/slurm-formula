@@ -99,7 +99,7 @@ slurm_munge_service_config:
 
 ## X login client utility if slurm:X is true
 
-{% if salt['pillar.get']('slurm:X', True) %}
+{% if salt['pillar.get']('slurm:X', False) %}
 
 slurm_srun_x:
   file.managed:

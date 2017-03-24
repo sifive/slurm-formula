@@ -91,7 +91,7 @@ slurm_config_energy:
 
 ## X login node utilities if slurm:X is true
 
-{% if salt['pillar.get']('slurm:X', True) %}
+{% if salt['pillar.get']('slurm:X', False) %}
 
 slurm_srun_x_start:
   file.managed:
