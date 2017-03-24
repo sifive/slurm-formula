@@ -112,6 +112,15 @@ slurm_srun_x:
     - group: 'root'
     - mode: '0755'
 
+slurm_srun_x_start:
+  file.managed:
+    - name: {{slurm.bindir}}/srun-x-start
+    - template: jinja
+    - source: salt://slurm/files/srun-x-start.sh.jinja
+    - user: 'root'
+    - group: 'root'
+    - mode: '0755'
+
 slurm_screen:
   pkg.installed:
     - pkgs: {{ slurm.screen_pkgs }}
