@@ -17,6 +17,7 @@ slurm formula
  - cgroup use is now based on a map.jinja variable
  - service restart is configurable
  - node-associated config files, e.g. cgroup.conf, are now in node.sls
+ - added reload state
  - slurmctld machines are not necessarily nodes
  - consistent state ID names that shouldn't clash with other states
  - move checkpointing to separate state

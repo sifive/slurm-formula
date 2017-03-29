@@ -48,10 +48,3 @@ slurm_server_state:
     - makedirs: true
 
 
-slurm_server_reload:
-  cmd.run:
-    - name: {{ slurm.scontrol }} reconfigure
-    - require:
-      - file: slurm_config
-    - onchanges:
-      - file: slurm_config
