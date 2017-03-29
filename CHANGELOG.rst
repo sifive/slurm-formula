@@ -15,6 +15,7 @@ slurm formula
  - packages for node and server
  - sorted out default locations for logs, pid files etc
  - cgroup use is now based on a map.jinja variable
+ - service restart is configurable
  - node-associated config files, e.g. cgroup.conf, are now in node.sls
  - slurmctld machines are not necessarily nodes
  - consistent state ID names that shouldn't clash with other states

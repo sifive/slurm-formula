@@ -32,6 +32,12 @@ slurm:
   MailProg: '/bin/mail'
   AcctGatherEnergyType: 'ipmi'
   X: true
+  # Which services watch their corresponding config file
+  restart:
+    munge: true
+    node: false
+    server: false
+    db: true
   Frontends:
     frontend01:
       State: UNKNOWN
@@ -79,10 +85,10 @@ slurm:
       Shared: 'YES'
       nodes:
         - clnode002
-	
-slurmdbd:
-  Authtype: munge
-  StorageType: mysql
-  StorageUser: slurm
-  StoragePass: sASDfDasdf
-  DbdHost: mysql.example.com
+
+  db:
+    Authtype: munge
+    StorageType: mysql
+    StorageUser: slurm
+    StoragePass: sASDfDasdf
+    DbdHost: mysql.example.com

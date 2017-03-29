@@ -20,6 +20,10 @@ slurm_node:
       {%  if salt['pillar.get']('slurm:AuthType', 'munge') == 'munge' %}
       - service: munge
       {%endif %}
+{% if slurm.restart.node|default(False) %}
+   - watch:
+       - file: slurm_config
+{% endif %}
 
 slurm_node_default:
   file.managed:

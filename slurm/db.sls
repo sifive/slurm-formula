@@ -16,8 +16,10 @@ slurm_db:
       - file: slurm_logdir
       - pkg: slurm_db
       - service: slurm_munge
+{% if slurm.restart.db|default(False) %}
     - watch:
       - file: slurm_db_config
+{% endif %}
 
 slurm_db_config:
   file.managed:

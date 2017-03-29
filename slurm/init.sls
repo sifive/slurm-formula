@@ -48,8 +48,10 @@ slurm_munge:
   service.running:
     - name: munge
     - enable: true
+{% if slurm.restart.munge|default(False) %}
     - watch:
       - cmd: slurm_munge_key
+{% endif %}
     - require:
       - pkg: slurm_munge
     - require_in:
