@@ -10,7 +10,6 @@ slurm_node:
   {% if slurm.node_pkgs != [] %}
   pkg.installed:
     - pkgs: {{ slurm.node_pkgs }}
-    - skip_verify: true
   {% endif %}
   service.running:
     - name: {{ slurm.slurmd }}

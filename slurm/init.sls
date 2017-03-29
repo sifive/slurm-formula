@@ -5,7 +5,6 @@
 slurm_client:
   pkg.installed:
     - pkgs: {{ slurm.client_pkgs }}
-    - skip_verify: true
 
 slurm_config:
   file.managed:
@@ -46,7 +45,6 @@ slurm_user:
 slurm_munge:
   pkg.installed:
     - pkgs: {{ slurm.munge_pkgs }}
-    - skip_verify: true
   service.running:
     - name: munge
     - enable: true
