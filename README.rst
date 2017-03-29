@@ -56,3 +56,8 @@ Install and configure SLURM development packages.
 
 Install and configure SLURM database development packages.
 
+``slurm.reconfigure``
+=====================
+
+Note really a state - used to reconfigure all of the nodes after changing
+the config file and pushing it out.
