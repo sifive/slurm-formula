@@ -8,6 +8,7 @@ slurm formula
  - pulled out stuff that set up config on the salt minion!
  - sorted out map.jinja pkg* - now lists and renamed
  - renamed slurm.slurmdbd to slurm.db
+ - added srun-x scripts for launching X connetions over ssh tunnels
  - new slurm.devel and slurm.db_devel states
  - munge key created from base64 pillar value
  - put state files in somewhere more sensible than /tmp
