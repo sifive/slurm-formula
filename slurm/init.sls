@@ -121,8 +121,5 @@ slurm_srun_x_start:
     - group: 'root'
     - mode: '0755'
 
-slurm_screen:
-  pkg.installed:
-    - pkgs: {{ slurm.screen_pkgs }}
 
 {% endif %}
