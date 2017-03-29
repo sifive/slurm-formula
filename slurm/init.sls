@@ -48,7 +48,7 @@ slurm_munge:
   service.running:
     - name: munge
     - enable: true
-{% if slurm.restart.munge|default(False) %}
+{% if salt['pillar.get']('slurm:restart:munge', False) %}
     - watch:
       - cmd: slurm_munge_key
 {% endif %}

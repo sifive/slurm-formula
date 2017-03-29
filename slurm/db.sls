@@ -16,7 +16,7 @@ slurm_db:
       - file: slurm_logdir
       - pkg: slurm_db
       - service: slurm_munge
-{% if slurm.restart.db|default(False) %}
+{% if salt['pillar.get']('slurm:restart:db', False) %}
     - watch:
       - file: slurm_db_config
 {% endif %}

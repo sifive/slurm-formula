@@ -22,7 +22,7 @@ slurm_server:
       {%  if salt['pillar.get']('slurm:AuthType', 'munge') == 'munge' %}
       - service: munge
       {%endif %}
-{% if slurm.restart.db|default(False) %}
+{% if salt['pillar.get']('slurm:restart:server', False) %}
     - watch:
         - file: slurm_config
 {% endif %}
