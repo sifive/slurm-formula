@@ -10,6 +10,7 @@ slurm formula
  - renamed slurm.slurmdbd to slurm.db
  - added srun-x scripts for launching X connetions over ssh tunnels
  - new slurm.devel and slurm.db_devel states
+ - optional support for the openlava packages
  - munge key created from base64 pillar value
  - put state files in somewhere more sensible than /tmp
  - slurmdbd config is in the slurm.db pillar space

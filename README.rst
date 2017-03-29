@@ -45,19 +45,25 @@ Install and configure the control daemon.
 Install and configure database daemon.
 
 
+``slurm.openlava``
+------------------
+
+Install SLURM openlaval compatibility scripts
+
+
 ``slurm.devel``
 ------------------
 
-Install and configure SLURM development packages.
+Install SLURM development packages.
 
 
 ``slurm.db_devel``
 ------------------
 
-Install and configure SLURM database development packages.
+Install SLURM database development packages.
 
 ``slurm.reconfigure``
-=====================
+---------------------
 
 Note really a state - used to reconfigure all of the nodes after changing
 the config file and pushing it out.
