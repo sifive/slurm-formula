@@ -2,7 +2,7 @@
 
 {% from "slurm/map.jinja" import slurm with context %}
 
-slurm_pam
+slurm_pam:
   {% if slurm.pam_pkgs != [] %}
   pkg.installed:
     - pkgs: {{ slurm.pam_pkgs }}
