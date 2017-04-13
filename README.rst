@@ -62,6 +62,11 @@ Install SLURM development packages.
 
 Install SLURM database development packages.
 
+``slurm.qos``
+------------------
+
+Set SLURM QOSs.
+
 ``slurm.reconfigure``
 ---------------------
 

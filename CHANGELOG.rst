@@ -21,6 +21,7 @@ slurm formula
  - service restart is configurable
  - node-associated config files, e.g. cgroup.conf, are now in node.sls
  - added reload state
+ - added stat for setting QOSs
  - slurmctld machines are not necessarily nodes
  - consistent state ID names that shouldn't clash with other states
  - move checkpointing to separate state

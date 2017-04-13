@@ -92,3 +92,11 @@ slurm:
     StorageUser: slurm
     StoragePass: sASDfDasdf
     DbdHost: mysql.example.com
+
+  qos:
+    qos1:
+      priority: 10
+      GrpTRES: 'cpu=64'
+    qos2:
+      MaxNodes: 24
+      
