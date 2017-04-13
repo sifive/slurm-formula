@@ -32,7 +32,7 @@ slurm_qos_create_{{qos}}:
     - require:
         - pkg: slurm_client
 
-{% for attr, val in qosinfo|iteritems %}
+{% for attr, val in qosinfo|dictsort %}
 
 slurm_qos_set_{{qos}}_{{attr}}:
   cmd.run:
