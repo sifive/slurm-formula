@@ -41,10 +41,10 @@ slurm_qos_set_{{qos}}_{{attr}}:
     - require:
         - cmd: slurm_qos_create_{{qos}}
 
-{% endfor %}       {# Iterating over parameters for this QOS %}
+{% endfor %}       {# Iterating over parameters for this QOS #}
 
-{% endif %}        {# not absent %}
+{% endif %}        {# not absent #}
 
-{% endfor %}       {# Iterating over all QOSs %}
+{% endfor %}       {# Iterating over all QOSs #}
 
 
