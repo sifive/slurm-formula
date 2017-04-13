@@ -34,7 +34,7 @@ slurm_qos_create_{{qos}}:
 
 {% for attr, val in qosinfo|iteritems %}
 
-slurm_qos_set_{{qos}}_{{attr}:
+slurm_qos_set_{{qos}}_{{attr}}:
   cmd.run:
     - name: {{ sacctmgr }} -i modify qos {{ qos }} set {{attr}}={{val}}
     - unless: test "`{{ sacctmgr }} -n -P show qos {{ qos }} format={{attr}}`" = "{{val}}"
