@@ -16,19 +16,19 @@ include:
 
 {% if absent %}
 
-slurm_cluster_create_{{cluster}}:
+slurm_cluster_delete_{{cluster}}:
   cmd.run:
-    - name: {{ sacctmgr }} -i create cluster {{ cluster }}
-    - unless: test -n "`{{ sacctmgr }} -n show cluster {{ cluster }}`"
+    - name: {{ sacctmgr }} -i delete cluster {{ cluster }}
+    - unless: test -z "`{{ sacctmgr }} -n show cluster {{ cluster }}`"
     - require:
         - pkg: slurm_client
 
 {% else %}
 
-slurm_cluster_delete_{{cluster}}:
+slurm_cluster_create_{{cluster}}:
   cmd.run:
-    - name: {{ sacctmgr }} -i delete cluster {{ cluster }}
-    - unless: test -z "`{{ sacctmgr }} -n show cluster {{ cluster }}`"
+    - name: {{ sacctmgr }} -i create cluster {{ cluster }}
+    - unless: test -n "`{{ sacctmgr }} -n show cluster {{ cluster }}`"
     - require:
         - pkg: slurm_client
 
