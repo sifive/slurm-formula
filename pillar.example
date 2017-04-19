@@ -94,10 +94,11 @@ slurm:
     DbdHost: mysql.example.com
 
   acct:
-    cluster:
-      test: true
-      production: true
-      unused: false
+    clusters:
+      test: {}
+      production: {}
+      unused:
+        absent: true
     qos:
       qos1:
         priority: 10
