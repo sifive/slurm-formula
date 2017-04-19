@@ -7,7 +7,7 @@ include:
 
 {% set sacctmgr = 'sacctmgr' %}
 
-{% set qoses = salt['pillar.get']('slurm:qos', {}) %}
+{% set qoses = salt['pillar.get']('slurm:acct:qos', {}) %}
 
 {% for qos, qosinfo in qoses|dictsort %}
 
