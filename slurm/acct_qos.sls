@@ -1,4 +1,4 @@
-## SLURM start for setting up QOSs
+## SLURM state for setting up QOSs
 
 {% from "slurm/map.jinja" import slurm with context %}
 include:

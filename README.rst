@@ -62,7 +62,12 @@ Install SLURM development packages.
 
 Install SLURM database development packages.
 
-``slurm.qos``
+``slurm.acct_cluster``
+------------------
+
+Set SLURM clusters for accounting.
+
+``slurm.acct_qos``
 ------------------
 
 Set SLURM QOSs.

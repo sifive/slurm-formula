@@ -5,8 +5,8 @@ slurm formula
  - way more config file options and much more sensible defaults
  - fix munge issues with /var/log permission on Ubuntu 16.04
  - pulled out mysql server setup
- - pulled out stuff that set up config on the salt minion!
- - sorted out map.jinja pkg* - now lists and renamed
+ - pulled out stuff that set up config on the salt minion
+ - sorted out map.jinja pkg* - now all lists and renamed consistently
  - renamed slurm.slurmdbd to slurm.db
  - added srun-x scripts for launching X connetions over ssh tunnels
  - new slurm.devel and slurm.db_devel states
@@ -21,7 +21,7 @@ slurm formula
  - service restart is configurable
  - node-associated config files, e.g. cgroup.conf, are now in node.sls
  - added reload state
- - added stat for setting QOSs
+ - added states for setting things using sacctmgr - QOSs, clusters
  - slurmctld machines are not necessarily nodes
  - consistent state ID names that shouldn't clash with other states
  - move checkpointing to separate state

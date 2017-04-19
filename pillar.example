@@ -93,10 +93,18 @@ slurm:
     StoragePass: sASDfDasdf
     DbdHost: mysql.example.com
 
-  qos:
-    qos1:
-      priority: 10
-      GrpTRES: 'cpu=64'
-    qos2:
-      MaxNodes: 24
+  acct:
+    cluster:
+      test: true
+      production: true
+      unused: false
+    qos:
+      qos1:
+        priority: 10
+        GrpTRES: 'cpu=64'
+      qos2:
+        MaxNodes: 24
+      qos3:
+        absent: true
+
       
