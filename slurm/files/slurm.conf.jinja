@@ -112,14 +112,14 @@ SlurmUser=slurm
 
 {{ slurmconf('BatchStartTimeout','10') -}}
 {{ slurmconf('CompleteWait', '0') -}}
+{{ slurmconf('MessageTimeout', '10') -}}
+{{ slurmconf('UnkillableStepTimeout', '60') -}}
 #EpilogMsgTime=2000
 #GetEnvTimeout=2
 #HealthCheckInterval=0
 #HealthCheckProgram=
-#MessageTimeout=10
 #ResvOverRun=0
 #OverTimeLimit=0
-#UnkillableStepTimeout=60
 
 ## SCHEDULING
 {{ slurmconf_prefix('SchedulerType','backfill', 'sched') -}}
