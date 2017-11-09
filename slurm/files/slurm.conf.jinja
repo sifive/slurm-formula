@@ -1,0 +1,223 @@
+## Managed by salt ##
+#
+# slurm.conf SLURM config file
+#
+
+{% set slurm_conf = pillar.get('slurm', {}) -%}
+
+{%- macro slurmconf(field, default) -%}
+{%- if field in slurm_conf -%}
+{{field}}={{slurm_conf.get(field)}}
+{% else -%}
+# {{field}}={{default}}
+{% endif -%}
+{%- endmacro -%}
+
+{%- macro slurmconf_always(field, default) -%}
+{%- if field in slurm_conf -%}
+{{field}}={{slurm_conf.get(field)}}
+{% else -%}
+{{field}}={{default}}
+{% endif -%}
+{%- endmacro -%}
+
+{%- macro slurmconf_prefix(field, default, prefix) -%}
+{%- if field in slurm_conf -%}
+{{field}}={{prefix}}/{{slurm_conf.get(field)}}
+{% else -%}
+# {{field}}={{prefix}}/{{default}}
+{% endif -%}
+{%- endmacro -%}
+
+## BASIC CONFIGURATION
+ClusterName={{ slurm_conf.ClusterName }}
+ControlMachine={{ slurm_conf.ControlMachine }}
+{{ slurmconf('ControlAddr',slurm_conf.ControlMachine) -}}
+{{ slurmconf('BackupController','') -}}
+{{ slurmconf('BackupAddr','') -}}
+{{ slurmconf('GresTypes', '') -}}
+
+SlurmUser=slurm
+{{ slurmconf('SlurmdUser', 'root') -}}
+{{ slurmconf('SlurmctldPort', '6817') -}}
+{{ slurmconf('SlurmdPort', '6818') -}}
+{{ slurmconf('SrunPortRange', '') -}}
+{{ slurmconf_always('SlurmdSpoolDir', slurm.slurmddir) }}
+{{ slurmconf_always('StateSaveLocation', slurm.slurmctlddir) }}
+{{ slurmconf_always('JobCheckpointDir', slurm.slurmctlddir) }}
+{{ slurmconf_always('SlurmctldPidFile', slurm.rundir + '/slurmctld.pid') }}
+{{ slurmconf_always('SlurmdPidFile', slurm.rundir + '/slurmd.pid') }}
+{{ slurmconf_always('PluginDir', slurm.plugindir) }}
+{{ slurmconf_prefix('AuthType', 'munge', 'auth') -}}
+{{ slurmconf_prefix('CryptoType', 'munge', 'crypto') -}}
+{{ '' }}
+{{ slurmconf('JobCredentialPrivateKey', '') -}}
+{{ slurmconf('JobCredentialPublicCertificate', '') -}}
+{{ '' }}
+{{ slurmconf_always('MailProg', slurm.mail) -}}
+{{ slurmconf('ReturnToService', '0') -}}
+{{ slurmconf('DisableRootJobs', 'NO') -}}
+{{ slurmconf('EnforcePartLimits', 'NO') -}}
+{{ slurmconf('JobRequeue', '1') -}}
+{{ slurmconf('JobFileAppend', '0') -}}
+{{ slurmconf('JobSubmitPlugins', '') -}}
+{{ slurmconf('KillOnBadExit', '0') -}}
+{{ slurmconf('PrivateData', '') -}}
+{{ slurmconf('CacheGroups','0') -}}
+{{ slurmconf('GroupUpdateForce', '0') -}}
+{{ slurmconf('GroupUpdateTime', '600') -}}
+{{ slurmconf_prefix('ProctrackType', 'pgid', 'proctrack') }}
+{{ slurmconf('PropagateResourceLimits', 'ALL') -}}
+{{ slurmconf('PropagateResourceLimitsExcept', '') -}}
+{{ slurmconf('PropagatePrioProcess', '0') -}}
+{{ slurmconf('Prolog', '') -}}
+{{ slurmconf('PrologFlags', '') -}}
+{{ slurmconf('Epilog', '') -}}
+{{ slurmconf('SrunEpilog', '') -}}
+{{ slurmconf('SrunProlog', '') -}}
+{{ slurmconf('TaskProlog', '') -}}
+{{ slurmconf('TaskEpilog', '') -}}
+{{ slurmconf_prefix('TaskPlugin', 'none', 'task') -}}
+{{ slurmconf('TaskPluginParam', '') -}}
+{{ slurmconf('PrologSlurmctld', '') -}}
+{{ slurmconf('EpilogSlurmctld', '') -}}
+{{ slurmconf('SallocDefaultCommand', '') -}}
+{{ slurmconf_prefix('CheckpointType', 'none', 'checkpoint') }}
+{{ slurmconf('FirstJobId', '1') -}}
+{{ slurmconf('MaxJobId', '2147418112') -}}
+{{ slurmconf('MaxArraySize', '1001') -}}
+{{ slurmconf('MaxJobCount', '10000') -}}
+{{ slurmconf('MaxStepCount', '40000') -}}
+{{ slurmconf('MaxTasksPerNode', '128') -}}
+{{ slurmconf('UnkillableStepProgram', '') -}}
+{{ slurmconf('MpiDefault', 'none') -}}
+{{ slurmconf('MpiParams', '') -}}
+{{ slurmconf('TmpFs', '/tmp') -}}
+{{ slurmconf('TrackWCKey', 'no') -}}
+{{ slurmconf('TreeWidth', '50') -}}
+{{ slurmconf('UsePAM', '0') -}}
+
+## SWITCHES
+{{ slurmconf_prefix('SwitchType', 'none', 'switch') -}}
+{{ slurmconf_prefix('TopologyPlugin', 'none', 'topology') -}}
+{{ slurmconf('TopologyParam', '') -}}
+
+## TIMERS
+{{ slurmconf('SlurmctldTimeout','120') -}}
+{{ slurmconf('SlurmdTimeout','300') -}}
+{{ slurmconf('InactiveLimit','0') -}}
+{{ slurmconf('MinJobAge', '300') -}}
+{{ slurmconf('KillWait', '30') -}}
+{{ slurmconf('Waittime', '0') -}}
+
+{{ slurmconf('BatchStartTimeout','10') -}}
+{{ slurmconf('CompleteWait', '0') -}}
+#EpilogMsgTime=2000
+#GetEnvTimeout=2
+#HealthCheckInterval=0
+#HealthCheckProgram=
+#MessageTimeout=10
+#ResvOverRun=0
+#OverTimeLimit=0
+#UnkillableStepTimeout=60
+
+## SCHEDULING
+{{ slurmconf_prefix('SchedulerType','backfill', 'sched') -}}
+{{ slurmconf_prefix('SelectType','linear', 'select') -}}
+{{ slurmconf('SelectTypeParameters', 'CR_CPU') -}}
+{{ slurmconf('FastSchedule', '1') -}}
+{{ slurmconf('SchedulerParameters', '') -}}
+{{ slurmconf('SchedulerTimeSlice', '30') -}}
+{{ slurmconf('SchedulerPort', '7321') -}}
+{{ slurmconf('DefMemPerCPU', '0') -}}
+{{ slurmconf('MaxMemPerCPU', '0') -}}
+{{ slurmconf('VSizeFactor', '0') -}}
+
+{{ slurmconf_prefix('PreemptType', 'none', 'preempt') }}
+{{ slurmconf('PreemptMode', 'OFF') }}
+
+## LOGGING
+{{ slurmconf('SlurmctldDebug', 'info') -}}
+{{ slurmconf('SlurmdDebug', 'info') -}}
+{{ slurmconf('SlurmSchedLogLevel', '0') -}}
+{{ slurmconf_always('SlurmctldLogFile', slurm.logdir + '/slurmctld.log') -}}
+{{ slurmconf_always('SlurmdLogFile', slurm.logdir + '/slurmd.log') }}
+{{ slurmconf_always('SlurmSchedLogFile', slurm.logdir + '/slurm_sched.log') -}}
+{{ slurmconf('DebugFlags', '') -}}
+{{ slurmconf('LogTimeFormat', 'iso8601_ms') -}}
+
+{{ slurmconf_prefix('JobCompType', 'none', 'jobcomp') -}}
+{{ slurmconf('JobCompLoc', '') -}}
+{{ slurmconf('JobCompHost', '') -}}
+{{ slurmconf('JobCompUser', '') -}}
+{{ slurmconf('JobCompPass', '') -}}
+{{ slurmconf('JobCompPort', '') -}}
+
+
+{{ slurmconf_prefix('PriorityType', 'basic', 'priority') -}}
+{{ slurmconf('PriorityDecayHalfLife', '7-0') -}}
+{{ slurmconf('PriorityCalcPeriod', '5') -}}
+{{ slurmconf('PriorityFavorSmall', 'NO') -}}
+{{ slurmconf('PriorityFlags', '') -}}
+{{ slurmconf('PriorityParameters', '') -}}
+{{ slurmconf('PriorityMaxAge', '7-0') -}}
+{{ slurmconf('PriorityUsageResetPeriod', 'NONE') -}}
+{{ slurmconf('PriorityWeightAge', '0') -}}
+{{ slurmconf('PriorityWeightFairshare', '0') -}}
+{{ slurmconf('PriorityWeightJobSize', '0') -}}
+{{ slurmconf('PriorityWeightPartition', '0') -}}
+{{ slurmconf('PriorityWeightQOS', '0') -}}
+{{ slurmconf('PriorityWeightTRES', '') -}}
+
+## ACCOUNTING
+{{ slurmconf_prefix('JobAcctGatherType', 'none', 'jobacct_gather') -}}
+{{ slurmconf('JobAcctGatherFrequency', '') -}}
+{{ slurmconf('JobAcctGatherParams', '') -}}
+
+{{ slurmconf_prefix('AccountingStorageType', 'none', 'accounting_storage') -}}
+{{ slurmconf('AccountingStorageHost', '') -}}
+{{ slurmconf('AccountingStorageBackupHost', '') -}}
+{{ slurmconf('AccountingStoragePort', '') -}}
+{{ slurmconf('AccountingStorageLoc', '') -}}
+{{ slurmconf('AccountingStorageUser', '') -}}
+{{ slurmconf('AccountingStoragePass', '') -}}
+{{ slurmconf('AccountingStoreJobComment', 'YES') -}}
+{{ slurmconf('AccountingStorageTRES', '') -}}
+{{ slurmconf('AccountingStorageEnforce', '') -}}
+{{ '' }}
+{{ slurmconf_prefix('AcctGatherEnergyType', 'none', 'acct_gather_energy') -}}
+{{ slurmconf('AcctGatherNodeFreq', '0') -}}
+{{ slurmconf_prefix('AcctGatherInfinibandType', 'none', 'acct_gather_infiniband') }}
+{{ slurmconf_prefix('AcctGatherFilesystemType', 'none', 'acct_gather_filesystem') }}
+{{ slurmconf_prefix('AcctGatherProfileType', 'none', 'acct_gather_profile') }}
+
+## POWER SAVE SUPPORT FOR IDLE NODES
+{{ slurmconf('SuspendProgram', '') -}}
+{{ slurmconf('ResumeProgram', '') -}}
+{{ slurmconf('SuspendTimeout', '') -}}
+{{ slurmconf('ResumeTimeout', '') -}}
+{{ slurmconf('ResumeRate', '') -}}
+{{ slurmconf('SuspendExcNodes', '') -}}
+{{ slurmconf('SuspendExcParts', '') -}}
+{{ slurmconf('SuspendRate', '') -}}
+{{ slurmconf('SuspendTime', '') -}}
+
+## CHECKPOINTING
+
+
+## COMPUTE NODES
+{% if pillar['slurm']['nodes'] is defined -%}
+{%- for node, nodeinfo in pillar['slurm']['nodes'].iteritems() %}
+NodeName={{ node }} {% for key, value in nodeinfo.iteritems()  %} {{ key }}={{ value }} {% endfor -%}
+{% endfor -%}
+{% endif %}
+
+## PARTITIONS
+{% if pillar['slurm']['partitions'] is defined -%}
+{% set nodes=[] %}
+{% for partition, partinfo in pillar['slurm']['partitions'].iteritems() -%}
+PartitionName={{ partition }} {% for key, value in partinfo.iteritems() %} {% if key == 'nodes' %} Nodes={{ ','.join(value) }} {% else %}  {{ key }}={{ value }} {% endif %} {% endfor %}
+{% endfor -%}
+{% endif -%}
+
+

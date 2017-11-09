@@ -6,9 +6,9 @@ include:
   - slurm.logdir
 
 slurm_server:
-  {% if slurm.pkgSlurmServer is defined %}
+  {% if slurm.server_pkgs != [] %}
   pkg.installed:
-    - name: {{ slurm.pkgSlurmServer }}
+    - pkgs: {{ slurm.server_pkgs }}
     - require:
       # slurm packages require valid config else they do not start up
       - file: slurm_config
@@ -22,6 +22,10 @@ slurm_server:
       {%  if salt['pillar.get']('slurm:AuthType', 'munge') == 'munge' %}
       - service: munge
       {%endif %}
+{% if salt['pillar.get']('slurm:restart:server', False) %}
+    - watch:
+        - file: slurm_config
+{% endif %}
 
 slurm_server_default:
   file.managed:
@@ -44,10 +48,3 @@ slurm_server_state:
     - makedirs: true
 
 
-slurm_server_reload:
-  cmd.run:
-    - name: {{ slurm.scontrol }} reconfigure
-    - require:
-      - file: slurm_config
-    - onchanges:
-      - file: slurm_config

@@ -4,10 +4,7 @@
 
 slurm_client:
   pkg.installed:
-    - pkgs:
-      - {{ slurm.pkgSlurm }}
-      - {{ slurm.pkgSlurmPlugins }}
-    - refresh: True
+    - pkgs: {{ slurm.client_pkgs }}
 
 slurm_config:
   file.managed:
@@ -16,7 +13,7 @@ slurm_config:
     - group: root
     - mode: '0644'
     - template: jinja
-    - source: salt://slurm/files/slurm.conf
+    - source: salt://slurm/files/slurm.conf.jinja
     - context:
         slurm: {{ slurm }}
 
@@ -24,6 +21,7 @@ slurm_config:
 slurm_user:
   user.present:
     - name: slurm
+    - system: True
 {% if slurm.homedir is defined %}
     - home: {{ slurm.user_homedir }}
 {% endif %}
@@ -46,12 +44,14 @@ slurm_user:
 
 slurm_munge:
   pkg.installed:
-    - name: {{ slurm.pkgMunge }}
+    - pkgs: {{ slurm.munge_pkgs }}
   service.running:
     - name: munge
-    - enambe: true
+    - enable: true
+{% if salt['pillar.get']('slurm:restart:munge', False) %}
     - watch:
-      - file: slurm_munge_key
+      - cmd: slurm_munge_key
+{% endif %}
     - require:
       - pkg: slurm_munge
     - require_in:
@@ -71,10 +71,10 @@ slurm_munge_key:
   cmd.wait:
     - name: base64 -d /etc/munge/munge.key64 >/etc/munge/munge.key
     - watch:
-        - file: /etc/munge/munge.key64
+        - file: slurm_munge_key64
   file.managed:
     - name: /etc/munge/munge.key
-    - requre:
+    - require:
         - cmd: slurm_munge_key
     - replace: false
     - mode: '0400'
@@ -97,3 +97,29 @@ slurm_munge_service_config:
         - pkg: slurm_munge
 {% endif %}
 
+## X login client utility if slurm:X is true
+
+{% if salt['pillar.get']('slurm:X', False) %}
+
+slurm_srun_x:
+  file.managed:
+    - name: {{slurm.bindir}}/srun-x
+    - template: jinja
+    - source: salt://slurm/files/srun-x.sh.jinja
+    - context:
+        slurm: {{ slurm }}
+    - user: 'root'
+    - group: 'root'
+    - mode: '0755'
+
+slurm_srun_x_start:
+  file.managed:
+    - name: {{slurm.bindir}}/srun-x-start
+    - template: jinja
+    - source: salt://slurm/files/srun-x-start.sh.jinja
+    - user: 'root'
+    - group: 'root'
+    - mode: '0755'
+
+
+{% endif %}

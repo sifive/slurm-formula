@@ -6,41 +6,39 @@ include:
   - slurm
   - slurm.logdir
 
-slurm_slurmdbd:
+slurm_db:
   pkg.installed:
-    - pkgs:
-      - {{ slurm.pkgSlurmDBD }}
-      {% if slurm.pkgSlurmSQL is defined %}
-      - {{ slurm.pkgSlurmSQL }}
-      {% endif %}
+    - pkgs: {{ slurm.db_pkgs }}
   service.running:
     - enable: True
     - name: {{ slurm.slurmdbd }}
     - require:
       - file: slurm_logdir
-      - pkg: slurm_slurmdbd
+      - pkg: slurm_db
       - service: slurm_munge
+{% if salt['pillar.get']('slurm:restart:db', False) %}
     - watch:
-      - file: slurm_slurmdbd_config
+      - file: slurm_db_config
+{% endif %}
 
-slurm_slurmdbd_config:
+slurm_db_config:
   file.managed:
     - name: {{slurm.etcdir}}/slurmdbd.conf
     - user: root
     - group: root
     - mode: '0644'
     - template: jinja 
-    - source: salt://slurm/files/slurmdbd.conf
+    - source: salt://slurm/files/slurmdbd.conf.jinja
     - context:
         slurm: {{ slurm }}
 
-slurm_slurmdb_default:
+slurm_db_default:
   file.managed:
     - name: /etc/default/{{slurm.slurmdbd}}
     - require:
-      - pkg: slurm_slurmdbd
+      - pkg: slurm_db
     - require_in:
-      - service: slurm_slurmdbd
+      - service: slurm_db
 
 
 

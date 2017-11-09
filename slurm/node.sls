@@ -7,9 +7,9 @@ include:
   - slurm.logdir
 
 slurm_node:
-  {% if slurm.pkgSlurmNode is defined %}
+  {% if slurm.node_pkgs != [] %}
   pkg.installed:
-    - name: {{ slurm.pkgSlurmNode }}
+    - pkgs: {{ slurm.node_pkgs }}
   {% endif %}
   service.running:
     - name: {{ slurm.slurmd }}
@@ -20,6 +20,10 @@ slurm_node:
       {%  if salt['pillar.get']('slurm:AuthType', 'munge') == 'munge' %}
       - service: munge
       {%endif %}
+   {% if salt['pillar.get']('slurm:restart:node', False) %}
+    - watch:
+       - file: slurm_config
+   {% endif %}
 
 slurm_node_default:
   file.managed:
@@ -46,12 +50,12 @@ slurm_node_state:
 {% if slurm.use_cgroup %}
 slurm_cgroup::
   file.managed:
-    - name: {{slurm.etcdir}}/cgroup.conf   
+    - name: {{slurm.etcdir}}/cgroup.conf 
     - user: slurm
     - group: root
     - mode: 400
     - template: jinja
-    - source: salt://slurm/files/cgroup.conf 
+    - source: salt://slurm/files/cgroup.conf.jinja
     - context:
         slurm: {{ slurm }}
     - require_in:
@@ -67,15 +71,14 @@ slurm_topolgy:
     - group: root
     - mode: '0644'
     - template: jinja
-    - source: salt://slurm/files/topology.conf
+    - source: salt://slurm/files/topology.conf.jinja
     - context:
         slurm: {{ slurm }}
     - require:
-      - pkg: {{ slurm.pkgSlurm }}
+      - pkg: slurm_client
 {% endif %}
 
 
-{% if salt['pillar.get']('slurm:AcctGatherEnergyType') in ['none','ipmi','ibmaem','cray','rapi'] -%}
 slurm_config_energy:
   file.managed:
     - name: {{slurm.etcdir}}/acct_gather.conf
@@ -83,9 +86,27 @@ slurm_config_energy:
     - group: root
     - mode: 644
     - template: jinja
-    - source: salt://slurm/files/acct_gather.conf
+    - source: salt://slurm/files/acct_gather.conf.jinja
     - context:
         slurm: {{ slurm }}
     - require:
       - pkg: slurm_client
+
+## X login node utilities if slurm:X is true
+
+{% if salt['pillar.get']('slurm:X', False) %}
+
+slurm_srun_x_session:
+  file.managed:
+    - name: {{slurm.bindir}}/srun-x-session
+    - template: jinja
+    - source: salt://slurm/files/srun-x-session.sh.jinja
+    - user: 'root'
+    - group: 'root'
+    - mode: '0755'
+
+slurm_screen:
+  pkg.installed:
+    - pkgs: {{ slurm.screen_pkgs }}
+
 {% endif %}

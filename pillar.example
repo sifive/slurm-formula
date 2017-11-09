@@ -31,6 +31,13 @@ slurm:
   ProctrackType: 'cgroup'
   MailProg: '/bin/mail'
   AcctGatherEnergyType: 'ipmi'
+  X: true
+  # Which services watch their corresponding config file
+  restart:
+    munge: true
+    node: false
+    server: false
+    db: true
   Frontends:
     frontend01:
       State: UNKNOWN
@@ -78,10 +85,27 @@ slurm:
       Shared: 'YES'
       nodes:
         - clnode002
-	
-slurmdbd:
-  Authtype: munge
-  StorageType: mysql
-  StorageUser: slurm
-  StoragePass: sASDfDasdf
-  DbdHost: mysql.example.com
+
+  db:
+    Authtype: munge
+    StorageType: mysql
+    StorageUser: slurm
+    StoragePass: sASDfDasdf
+    DbdHost: mysql.example.com
+
+  acct:
+    clusters:
+      test: {}
+      production: {}
+      unused:
+        absent: true
+    qos:
+      qos1:
+        priority: 10
+        GrpTRES: 'cpu=64'
+      qos2:
+        MaxNodes: 24
+      qos3:
+        absent: true
+
+      

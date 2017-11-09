@@ -1,0 +1,78 @@
+## Managed by salt ##
+#
+# slurmdbd.conf SLURM database config file
+#
+
+{% set slurm_conf = salt['pillar.get']('slurm:db', {}) -%}
+
+{%- macro slurmconf(field, default) -%}
+{%- if field in slurm_conf -%}
+{{field}}={{slurm_conf.get(field)}}
+{% else -%}
+# {{field}}={{default}}
+{% endif -%}
+{%- endmacro -%}
+
+{%- macro slurmconf_always(field, default) -%}
+{%- if field in slurm_conf -%}
+{{field}}={{slurm_conf.get(field)}}
+{% else -%}
+{{field}}={{default}}
+{% endif -%}
+{%- endmacro -%}
+
+{%- macro slurmconf_prefix(field, default, prefix) -%}
+{%- if field in slurm_conf -%}
+{{field}}={{prefix}}/{{slurm_conf.get(field)}}
+{% else -%}
+# {{field}}={{prefix}}/{{default}}
+{% endif -%}
+{%- endmacro -%}
+
+{%- macro slurmconf_prefix_always(field, default, prefix) -%}
+{%- if field in slurm_conf -%}
+{{field}}={{prefix}}/{{slurm_conf.get(field)}}
+{% else -%}
+{{field}}={{prefix}}/{{default}}
+{% endif -%}
+{%- endmacro -%}
+
+{{ slurmconf('ArchiveScript','') -}}
+{{ slurmconf('ArchiveDir','/tmp') -}}
+{{ slurmconf('ArchiveEvents', 'no') -}}
+{{ slurmconf('ArchiveJobs', 'no') -}}
+{{ slurmconf('ArchiveResvs', 'no') -}}
+{{ slurmconf('ArchiveSteps', 'no') -}}
+{{ slurmconf('ArchiveSuspend', 'no') -}}
+
+{{ slurmconf_prefix('AuthType', 'none', 'auth') -}}
+{{ slurmconf('AuthInfo', '') -}}
+
+SlurmUser=slurm
+{{ slurmconf_always('PluginDir', slurm.plugindir) }}
+{{ slurmconf_always('LogFile', slurm.logdir + '/slurmdbd.log') -}}
+{{ slurmconf_always('PidFile', slurm.rundir + '/slurmdbd.pid') -}}
+{{ slurmconf('DebugLevel', 'info') -}}
+{{ slurmconf('DebugFlags', '') -}}
+{{ slurmconf('LogTimeFormat', 'iso8601_ms') -}}
+
+{{ slurmconf_always('DbdHost', 'localhost') -}}
+{{ slurmconf('DbdBackupHost', '') -}}
+{{ slurmconf('DbdAddr', '') -}}
+{{ slurmconf('DbdPort', '') -}}
+{{ slurmconf('CommitDelay', '0') -}}
+
+{{ slurmconf_prefix_always('StorageType', 'mysql', 'accounting_storage') }}
+{{ slurmconf_always('StorageHost', 'localhost') -}}
+{{ slurmconf('StorageBackupHost', '') -}}
+{{ slurmconf('StorageUser', 'root') -}}
+{{ slurmconf('StoragePass', '') -}}
+{{ slurmconf('StoragePort', '') -}}
+{{ slurmconf('StorageLoc', '') -}}
+
+{{ slurmconf('PurgeEventAfter', '') -}}
+{{ slurmconf('PurgeJobAfter', '') -}}
+{{ slurmconf('PurgeResvAfter', '') -}}
+{{ slurmconf('PurgeStepAfter', '') -}}
+{{ slurmconf('PurgeSuspendAfter', '') -}}
+

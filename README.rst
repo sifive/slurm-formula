@@ -19,6 +19,7 @@ Available states
 .. contents::
     :local:
 
+
 ``slurm``
 ---------
 
@@ -31,14 +32,48 @@ for e.g. a head node and does not include the execution daemon.
 
 Configure and install compute node.
 
+
 ``slurm.server``
 ----------------
 
 Install and configure the control daemon.
 
 
-``slurm.slurmdbd``
+``slurm.db``
 ------------------
 
 Install and configure database daemon.
 
+
+``slurm.openlava``
+------------------
+
+Install SLURM openlaval compatibility scripts
+
+
+``slurm.devel``
+------------------
+
+Install SLURM development packages.
+
+
+``slurm.db_devel``
+------------------
+
+Install SLURM database development packages.
+
+``slurm.acct_cluster``
+------------------
+
+Set SLURM clusters for accounting.
+
+``slurm.acct_qos``
+------------------
+
+Set SLURM QOSs.
+
+``slurm.reconfigure``
+---------------------
+
+Note really a state - used to reconfigure all of the nodes after changing
+the config file and pushing it out.
