@@ -49,6 +49,7 @@ SlurmUser=slurm
 {{ slurmconf_always('SlurmdPidFile', slurm.rundir + '/slurmd.pid') }}
 {{ slurmconf_always('PluginDir', slurm.plugindir) }}
 {{ slurmconf_prefix('AuthType', 'munge', 'auth') -}}
+{{ slurmconf('AuthInfo', '') -}}
 {{ slurmconf_prefix('CryptoType', 'munge', 'crypto') -}}
 {{ '' }}
 {{ slurmconf('JobCredentialPrivateKey', '') -}}
