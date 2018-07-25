@@ -16,6 +16,7 @@ slurm_node:
     - enable: True
     - require:
       - file: slurm_config
+      - file: slurm_config_energy
       - file: slurm_logdir
       {%  if salt['pillar.get']('slurm:AuthType', 'munge') == 'munge' %}
       - service: munge
