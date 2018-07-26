@@ -41,10 +41,11 @@ slurm_user:
 {% endif %}
 
     
-
-slurm_munge:
+slurm_munge_pkg:
   pkg.installed:
     - pkgs: {{ slurm.munge_pkgs }}
+
+slurm_munge_service:
   service.running:
     - name: munge
     - enable: true
@@ -53,7 +54,7 @@ slurm_munge:
       - cmd: slurm_munge_key
 {% endif %}
     - require:
-      - pkg: slurm_munge
+      - pkg: slurm_munge_pkg
     - require_in:
       - pkg: slurm_client
 
@@ -65,7 +66,7 @@ slurm_munge_key64:
     - mode: '0400'
     - contents_pillar: slurm:MungeKey64
     - require:
-        - pkg: slurm_munge
+        - pkg: slurm_munge_pkg
 
 slurm_munge_key:
   cmd.wait:
@@ -79,7 +80,7 @@ slurm_munge_key:
     - replace: false
     - mode: '0400'
     - require_in:
-      - service: slurm_munge
+      - service: slurm_munge_service
 
 
 ## The default Ubuntu 16.04 version of munge breaks because of permissions
@@ -96,7 +97,7 @@ slurm_munge_service_config:
     - mode: '0644'
     - source: salt://slurm/files/munge.service
     - require_in:
-        - pkg: slurm_munge
+        - pkg: slurm_munge_pkg
 {% endif %}
 
 ## X login client utility if slurm:X is true
