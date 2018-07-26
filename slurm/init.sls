@@ -53,8 +53,6 @@ slurm_munge:
       - cmd: slurm_munge_key
 {% endif %}
     - require:
-      - cmd: slurm_munge_key
-    - require:
       - pkg: slurm_munge
     - require_in:
       - pkg: slurm_client
@@ -80,6 +78,8 @@ slurm_munge_key:
         - cmd: slurm_munge_key
     - replace: false
     - mode: '0400'
+    - require_in:
+      - service: slurm_munge
 
 
 ## The default Ubuntu 16.04 version of munge breaks because of permissions
