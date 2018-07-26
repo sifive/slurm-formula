@@ -2,61 +2,27 @@
 
 {% from "slurm/map.jinja" import slurm with context %}
 
-slurm_client:
-  pkg.installed:
-    - pkgs: {{ slurm.client_pkgs }}
 
-slurm_config:
+## The default Ubuntu 16.04 version of munge breaks because of permissions
+## on /var/log/.  We have to override this with --force at service startup
+## time.  We need to install this before the package as the package
+## tries to start itself.
+
+{% if grains.os=='Ubuntu' and grains.osrelease=='16.04' %}
+slurm_munge_service_config:
   file.managed:
-    - name: {{slurm.etcdir}}/slurm.conf
-    - user: slurm
+    - name: /etc/systemd/system/munge.service
+    - user: root
     - group: root
     - mode: '0644'
-    - template: jinja
-    - source: salt://slurm/files/slurm.conf.jinja
-    - context:
-        slurm: {{ slurm }}
-
-{% if slurm.user_create|default(False) == True %}
-slurm_user:
-  user.present:
-    - name: slurm
-    - system: True
-{% if slurm.homedir is defined %}
-    - home: {{ slurm.user_homedir }}
-{% endif %}
-{% if slurm.user_uid is defined %}
-    - uid: {{ slurm.user_uid }}
-{% endif %}
-{% if slurm.user_gid is defined %}
-    - gid: {{ slurm.user_gid }}
-{% else %}
-    - gid_from_name: True
-{% endif %}
+    - source: salt://slurm/files/munge.service
     - require_in:
-        - pkg: slurm_client
-        - file: slurm_topology
-        - file: slurm_cgroup
-        - file: slurm_config_energy
+        - pkg: slurm_munge_pkg
 {% endif %}
-
     
 slurm_munge_pkg:
   pkg.installed:
     - pkgs: {{ slurm.munge_pkgs }}
-
-slurm_munge_service:
-  service.running:
-    - name: munge
-    - enable: true
-{% if salt['pillar.get']('slurm:restart:munge', False) %}
-    - watch:
-      - cmd: slurm_munge_key
-{% endif %}
-    - require:
-      - pkg: slurm_munge_pkg
-    - require_in:
-      - pkg: slurm_client
 
 slurm_munge_key64:
   file.managed:
@@ -82,23 +48,61 @@ slurm_munge_key:
     - require_in:
       - service: slurm_munge_service
 
+slurm_munge_service:
+  service.running:
+    - name: munge
+    - enable: true
+{% if salt['pillar.get']('slurm:restart:munge', False) %}
+    - watch:
+      - cmd: slurm_munge_key
+{% else %}
+    - require
+      - file: slurm_munge_key
+{% endif %}
+    - require:
+      - pkg: slurm_munge_pkg
+    - require_in:
+      - pkg: slurm_client
 
-## The default Ubuntu 16.04 version of munge breaks because of permissions
-## on /var/log/.  We have to override this with --force at service startup
-## time.  We need to install this before the package as the package
-## tries to start itself.
+{% if slurm.user_create|default(False) == True %}
+slurm_user:
+  user.present:
+    - name: slurm
+    - system: True
+{% if slurm.homedir is defined %}
+    - home: {{ slurm.user_homedir }}
+{% endif %}
+{% if slurm.user_uid is defined %}
+    - uid: {{ slurm.user_uid }}
+{% endif %}
+{% if slurm.user_gid is defined %}
+    - gid: {{ slurm.user_gid }}
+{% else %}
+    - gid_from_name: True
+{% endif %}
+    - require_in:
+        - pkg: slurm_client
+        - file: slurm_topology
+        - file: slurm_cgroup
+        - file: slurm_config_energy
+{% endif %}
 
-{% if grains.os=='Ubuntu' and grains.osrelease=='16.04' %}
-slurm_munge_service_config:
+slurm_client:
+  pkg.installed:
+    - pkgs: {{ slurm.client_pkgs }}
+
+slurm_config:
   file.managed:
-    - name: /etc/systemd/system/munge.service
-    - user: root
+    - name: {{slurm.etcdir}}/slurm.conf
+    - user: slurm
     - group: root
     - mode: '0644'
-    - source: salt://slurm/files/munge.service
-    - require_in:
-        - pkg: slurm_munge_pkg
-{% endif %}
+    - template: jinja
+    - source: salt://slurm/files/slurm.conf.jinja
+    - context:
+        slurm: {{ slurm }}
+
+
 
 ## X login client utility if slurm:X is true
 
@@ -126,3 +130,4 @@ slurm_srun_x_start:
 
 
 {% endif %}
+
