@@ -51,10 +51,9 @@ slurm_munge:
 {% if salt['pillar.get']('slurm:restart:munge', False) %}
     - watch:
       - cmd: slurm_munge_key
-{% else %}
+{% endif %}
     - require:
       - cmd: slurm_munge_key
-{% endif %}
     - require:
       - pkg: slurm_munge
     - require_in:
