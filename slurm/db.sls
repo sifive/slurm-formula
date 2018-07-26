@@ -15,7 +15,7 @@ slurm_db:
     - require:
       - file: slurm_logdir
       - pkg: slurm_db
-      - service: slurm_munge
+      - service: slurm_munge_service
 {% if salt['pillar.get']('slurm:restart:db', False) %}
     - watch:
       - file: slurm_db_config
