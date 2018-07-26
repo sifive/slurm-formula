@@ -55,12 +55,11 @@ slurm_munge_service:
 {% if salt['pillar.get']('slurm:restart:munge', False) %}
     - watch:
       - cmd: slurm_munge_key
-{% else %}
-    - require
-      - file: slurm_munge_key
 {% endif %}
     - require:
       - pkg: slurm_munge_pkg
+    - require:
+      - file: slurm_munge_key
     - require_in:
       - pkg: slurm_client
 
