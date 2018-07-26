@@ -53,7 +53,7 @@ slurm_munge:
       - cmd: slurm_munge_key
 {% else %}
     - require:
-      - file: slurm_munge_key
+      - cmd: slurm_munge_key
 {% endif %}
     - require:
       - pkg: slurm_munge
