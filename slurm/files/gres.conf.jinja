@@ -1,8 +1,9 @@
 ## Managed by Salt
 ##
 ## Cluster-wide gres.conf file
-{% for node, reses in gres|dictsort %}
-{% for res in reses %}
+
+{% for node, reses in gres|dictsort -%}
+{% for res in reses -%}
 NodeaName={{node}} Name={{res['Name']-}}
 {% if res['Type'] is defined -%}
 {{' '}}Type={{res['Type']-}}
@@ -16,6 +17,5 @@ NodeaName={{node}} Name={{res['Name']-}}
 {% if res['Count'] is defined -%}
 {{' '}}Count={{res['Count']-}}
 {% endif %}
-
-{% endfor %}    {# Looping over all reses for a node set #}
-{% endfor %}    {# Looping over nodes #}
+{% endfor -%}    {# Looping over all reses for a node set #}
+{% endfor -%}    {# Looping over nodes #}
