@@ -49,7 +49,7 @@ slurm_node_state:
 
 
 {% if slurm.use_cgroup %}
-slurm_cgroup::
+slurm_cgroup:
   file.managed:
     - name: {{slurm.etcdir}}/cgroup.conf 
     - user: slurm
@@ -59,6 +59,27 @@ slurm_cgroup::
     - source: salt://slurm/files/cgroup.conf.jinja
     - context:
         slurm: {{ slurm }}
+    - require:
+      - file: slurm_node_state
+    - require_in:
+      - service: slurm_node
+{% endif %}
+
+{% set gres = salt['pillar.get']('slurm:gres') -%}
+{% if gres is mapping %}
+slurm_gres::
+  file.managed:
+    - name: {{slurm.etcdir}}/gres.conf 
+    - user: slurm
+    - group: root
+    - mode: 0444
+    - template: jinja
+    - source: salt://slurm/files/gres.conf.jinja
+    - context:
+        slurm: {{ slurm }}
+        gres: {{ gres }}
+    - require:
+      - file: slurm_node_state
     - require_in:
       - service: slurm_node
 {% endif %}
