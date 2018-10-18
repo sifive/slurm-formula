@@ -1,7 +1,7 @@
 ## Managed by Salt
 ##
 ## Cluster-wide gres.conf file
-{% for node, resses in gres|dictsort %}
+{% for node, reses in gres|dictsort %}
 {% for res in reses %}
 NodeaName={{node-}} Name={{res.name-}}
 {% if res['Type'] is defined %}
