@@ -98,6 +98,10 @@ SlurmUser=slurm
 {{ slurmconf('TreeWidth', '50') -}}
 {{ slurmconf('UsePAM', '0') -}}
 
+## HEALTH
+{{ slurmconf('HealthCheckInterval', '') -}}
+{{ slurmconf('HealthCheckProgram', '') -}}
+
 ## SWITCHES
 {{ slurmconf_prefix('SwitchType', 'none', 'switch') -}}
 {{ slurmconf_prefix('TopologyPlugin', 'none', 'topology') -}}
