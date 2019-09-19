@@ -99,8 +99,8 @@ SlurmUser=slurm
 {{ slurmconf('UsePAM', '0') -}}
 
 ## HEALTH
-{{ slurmconf('HealthCheckInterval', '') -}}
-{{ slurmconf('HealthCheckProgram', '') -}}
+#{{ slurmconf('HealthCheckInterval', '') -}}
+#{{ slurmconf('HealthCheckProgram', '') -}}
 
 ## SWITCHES
 {{ slurmconf_prefix('SwitchType', 'none', 'switch') -}}
