@@ -100,7 +100,7 @@ SlurmUser=slurm
 
 ## HEALTH
 {{ slurmconf('HealthCheckInterval', '0') -}}
-{{ slurmconf('HealthCheckProgram=', '') -}}
+{{ slurmconf('HealthCheckProgram', '') -}}
 
 ## SWITCHES
 {{ slurmconf_prefix('SwitchType', 'none', 'switch') -}}
