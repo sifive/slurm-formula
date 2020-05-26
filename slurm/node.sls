@@ -129,6 +129,6 @@ slurm_srun_x_session:
 
 slurm_screen:
   pkg.installed:
-    - pkgs: {{ slurm.screen_pkgs }}
+    - pkgs: {{ slurm.screen_pkgs|yaml }}
 
 {% endif %}
