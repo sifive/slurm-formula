@@ -8,7 +8,7 @@ include:
 slurm_server:
   {% if slurm.server_pkgs != [] %}
   pkg.installed:
-    - pkgs: {{ slurm.server_pkgs }}
+    - pkgs: {{ slurm.server_pkgs|yaml }}
     - require:
       # slurm packages require valid config else they do not start up
       - file: slurm_config

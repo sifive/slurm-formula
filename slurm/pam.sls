@@ -5,5 +5,5 @@
 slurm_pam:
   {% if slurm.pam_pkgs != [] %}
   pkg.installed:
-    - pkgs: {{ slurm.pam_pkgs }}
+    - pkgs: {{ slurm.pam_pkgs|yaml }}
   {% endif %}

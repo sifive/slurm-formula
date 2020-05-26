@@ -9,5 +9,5 @@ include:
 slurm_openlava:
   {% if slurm.openlava_pkgs != [] %}
   pkg.installed:
-    - pkgs: {{ slurm.openlava_pkgs }}
+    - pkgs: {{ slurm.openlava_pkgs|yaml }}
   {% endif %}

@@ -22,7 +22,7 @@ slurm_munge_service_config:
     
 slurm_munge_pkg:
   pkg.installed:
-    - pkgs: {{ slurm.munge_pkgs }}
+    - pkgs: {{ slurm.munge_pkgs|yaml }}
 
 slurm_munge_key64:
   file.managed:
@@ -88,7 +88,7 @@ slurm_user:
 
 slurm_client:
   pkg.installed:
-    - pkgs: {{ slurm.client_pkgs }}
+    - pkgs: {{ slurm.client_pkgs|yaml }}
 
 slurm_config:
   file.managed:

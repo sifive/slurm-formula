@@ -9,5 +9,5 @@ include:
 slurm_devel:
   {% if slurm.devel_pkgs != [] %}
   pkg.installed:
-    - pkgs: {{ slurm.devel_pkgs }}
+    - pkgs: {{ slurm.devel_pkgs|yaml }}
   {% endif %}

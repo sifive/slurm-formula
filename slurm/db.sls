@@ -8,7 +8,7 @@ include:
 
 slurm_db:
   pkg.installed:
-    - pkgs: {{ slurm.db_pkgs }}
+    - pkgs: {{ slurm.db_pkgs|yaml }}
   service.running:
     - enable: True
     - name: {{ slurm.slurmdbd }}

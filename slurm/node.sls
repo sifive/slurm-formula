@@ -9,7 +9,7 @@ include:
 slurm_node:
   {% if slurm.node_pkgs != [] %}
   pkg.installed:
-    - pkgs: {{ slurm.node_pkgs }}
+    - pkgs: {{ slurm.node_pkgs|yaml }}
   {% endif %}
   service.running:
     - name: {{ slurm.slurmd }}

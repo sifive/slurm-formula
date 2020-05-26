@@ -7,5 +7,5 @@ include:
 slurm_db_devel:
   {% if slurm.db_devel_pkgs != [] %}
   pkg.installed:
-    - pkgs: {{ slurm.db_devel_pkgs }}
+    - pkgs: {{ slurm.db_devel_pkgs|yaml }}
   {% endif %}
