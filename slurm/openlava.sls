@@ -14,3 +14,9 @@ slurm_openlava:
     - version: {{ slurm.slurm_version }}
   {% endif %}
   {% endif %}
+
+slurm_openlava_extras:
+  {% if slurm.openlava_extra_pkgs != [] %}
+  pkg.installed:
+    - names: {{ slurm.openlava_extra_pkgs|yaml }}
+  {% endif %}

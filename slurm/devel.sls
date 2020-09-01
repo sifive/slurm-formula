@@ -9,7 +9,7 @@ include:
 slurm_devel:
   {% if slurm.devel_pkgs != [] %}
   pkg.installed:
-    - pkgs: {{ slurm.devel_pkgs|yaml }}
+    - names: {{ slurm.devel_pkgs|yaml }}
   {% if slurm.slurm_version is defined %}
     - version: {{ slurm.slurm_version }}
   {% endif %}

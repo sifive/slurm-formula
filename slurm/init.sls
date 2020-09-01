@@ -22,7 +22,7 @@ slurm_munge_service_config:
     
 slurm_munge_pkg:
   pkg.installed:
-    - pkgs: {{ slurm.munge_pkgs|yaml }}
+    - names: {{ slurm.munge_pkgs|yaml }}
 {% if slurm.munge_version is defined %}
     - version: {{ slurm.munge_version }}
 {% endif %}

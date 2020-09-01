@@ -8,7 +8,7 @@ include:
 slurm_server:
   {% if slurm.server_pkgs != [] %}
   pkg.installed:
-    - pkgs: {{ slurm.server_pkgs|yaml }}
+    - names: {{ slurm.server_pkgs|yaml }}
   {% if slurm.slurm_version is defined %}
     - version: {{ slurm.slurm_version }}
   {% endif %}
