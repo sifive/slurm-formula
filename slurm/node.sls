@@ -10,6 +10,9 @@ slurm_node:
   {% if slurm.node_pkgs != [] %}
   pkg.installed:
     - pkgs: {{ slurm.node_pkgs|yaml }}
+  {% if slurm.slurm_version is defined %}
+    - version: {{ slurm.slurm_version }}
+  {% endif %}
   {% endif %}
   service.running:
     - name: {{ slurm.slurmd }}

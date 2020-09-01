@@ -23,6 +23,9 @@ slurm_munge_service_config:
 slurm_munge_pkg:
   pkg.installed:
     - pkgs: {{ slurm.munge_pkgs|yaml }}
+{% if slurm.munge_version is defined %}
+    - version: {{ slurm.munge_version }}
+{% endif %}
 
 slurm_munge_key64:
   file.managed:
@@ -89,6 +92,9 @@ slurm_user:
 slurm_client:
   pkg.installed:
     - pkgs: {{ slurm.client_pkgs|yaml }}
+{% if slurm.slurm_version is defined %}
+    - version: {{ slurm.slurm_version }}
+{% endif %}
 
 slurm_config:
   file.managed:

@@ -1,4 +1,7 @@
 slurm:
+  lookup:
+    slurm_version: 16.05.8*
+    munge_version: 0.5.12*
   MungeKey64: |
     MqHMmV2yuM9OsCBs68jHY67TH+yaRwTTO5XKgWMPfSZY5r8arFw7MLihV8UygWVXUGJITIZZsWtk
     sIrTxbgq/uQMleoUuJe9D2mKhKZdApS5YcnXC9hzrLNmQnHlkIUPQzXSdPABOtuUZmcOyiw4ZAkm
