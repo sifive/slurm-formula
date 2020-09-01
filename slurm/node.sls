@@ -44,8 +44,8 @@ slurm_node_state:
         - pkg: slurm_node
     - require_in:
         - service: slurm_node
-    - user: slurm
-    - group: slurm
+    - user: {{slurm.slurm_user}}
+    - group: {{slurm.slurm_group}}
     - mode: '0755'
     - makedirs: true
 
@@ -55,7 +55,7 @@ slurm_node_state:
 slurm_cgroup:
   file.managed:
     - name: {{slurm.etcdir}}/cgroup.conf 
-    - user: slurm
+    - user: {{slurm.slurm_user}}
     - group: root
     - mode: 400
     - template: jinja
@@ -70,10 +70,10 @@ slurm_cgroup:
 
 {% set gres = salt['pillar.get']('slurm:gres') -%}
 {% if gres is mapping %}
-slurm_gres::
+slurm_gres:
   file.managed:
     - name: {{slurm.etcdir}}/gres.conf 
-    - user: slurm
+    - user: {{slurm.slurm_user}}
     - group: root
     - mode: 0444
     - template: jinja
@@ -92,7 +92,7 @@ slurm_gres::
 slurm_topolgy:
   file.managed:
     - name: {{slurm.etcdir}}/topology.conf
-    - user: slurm
+    - user: {{slurm.slurm_user}}
     - group: root
     - mode: '0644'
     - template: jinja
@@ -107,7 +107,7 @@ slurm_topolgy:
 slurm_config_energy:
   file.managed:
     - name: {{slurm.etcdir}}/acct_gather.conf
-    - user: slurm
+    - user: {{slurm.slurm_user}}
     - group: root
     - mode: 644
     - template: jinja

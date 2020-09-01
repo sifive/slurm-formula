@@ -45,8 +45,8 @@ slurm_server_state:
         - pkg: slurm_server
     - require_in:
         - service: slurm_server
-    - user: slurm
-    - group: slurm
+    - user: {{slurm.slurm_user}}
+    - group: {{slurm.slurm_group}}
     - mode: '0755'
     - makedirs: true
 

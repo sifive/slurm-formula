@@ -5,7 +5,7 @@
 slurm_logdir:
   file.directory:
     - name: {{ slurm.logdir }}
-    - user: slurm
-    - group: slurm
+    - user: {{ slurm.slurm_user }}
+    - group: {{ slurm.slurm_group }}
     - mode: '0755'
 

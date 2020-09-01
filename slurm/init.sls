@@ -101,7 +101,7 @@ slurm_client:
 slurm_config:
   file.managed:
     - name: {{slurm.etcdir}}/slurm.conf
-    - user: root
+    - user: {{slurm.slurm_user}}
     - group: root
     - mode: '0644'
     - template: jinja
