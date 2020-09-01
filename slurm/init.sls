@@ -47,6 +47,8 @@ slurm_munge_key:
     - require:
         - cmd: slurm_munge_key
     - replace: false
+    - user: munge
+    - group: munge
     - mode: '0400'
     - require_in:
       - service: slurm_munge_service
