@@ -91,7 +91,7 @@ slurm_user:
 
 slurm_client:
   pkg.installed:
-    - pkgs: {{ slurm.client_pkgs|yaml }}
+    - names: {{ slurm.client_pkgs|yaml }}
 {% if slurm.slurm_version is defined %}
     - version: {{ slurm.slurm_version }}
 {% endif %}
