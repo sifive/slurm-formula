@@ -48,20 +48,32 @@ SlurmUser=slurm
 {{ slurmconf_always('SlurmctldPidFile', slurm.rundir + '/slurmctld.pid') }}
 {{ slurmconf_always('SlurmdPidFile', slurm.rundir + '/slurmd.pid') }}
 {{ slurmconf_always('PluginDir', slurm.plugindir) }}
+{{ slurmconf('SlurmdParameters', '') -}}
+{{ slurmconf('SlurmctldParameters', '') -}}
+{{ slurmconf('PlugStackConfig', '') -}}
+{{ slurmconf('SlurmctldPlugstack', '') -}}
+{{ slurmconf('SlurmctldPrimaryOffProg', '') -}}
+{{ slurmconf('SlurmctldPrimaryOnProg', '') -}}
 {{ slurmconf_prefix('AuthType', 'munge', 'auth') -}}
+{{ slurmconf_prefix('AuthAltType', 'none', 'auth') -}}
 {{ slurmconf('AuthInfo', '') -}}
 {{ slurmconf_prefix('CryptoType', 'munge', 'crypto') -}}
+{{ slurmconf('ReconfigFlags', '') -}}
 {{ '' }}
 {{ slurmconf('JobCredentialPrivateKey', '') -}}
 {{ slurmconf('JobCredentialPublicCertificate', '') -}}
 {{ '' }}
 {{ slurmconf_always('MailProg', slurm.mail) -}}
+{{ slurmconf('MailDomain', '') -}}
 {{ slurmconf('ReturnToService', '0') -}}
 {{ slurmconf('DisableRootJobs', 'NO') -}}
 {{ slurmconf('EnforcePartLimits', 'NO') -}}
 {{ slurmconf('JobRequeue', '1') -}}
+{{ slurmconf('RequeueExit', '') -}}
+{{ slurmconf('RequeueExitHold', '') -}}
 {{ slurmconf('JobFileAppend', '0') -}}
 {{ slurmconf('JobSubmitPlugins', '') -}}
+{{ slurmconf('CliFilterPlugins', '') -}}
 {{ slurmconf('KillOnBadExit', '0') -}}
 {{ slurmconf('PrivateData', '') -}}
 {{ slurmconf('CacheGroups','0') -}}
@@ -78,6 +90,7 @@ SlurmUser=slurm
 {{ slurmconf('SrunProlog', '') -}}
 {{ slurmconf('TaskProlog', '') -}}
 {{ slurmconf('TaskEpilog', '') -}}
+{{ slurmconf('PrologEpilogTimeout', '0') -}}
 {{ slurmconf_prefix('TaskPlugin', 'none', 'task') -}}
 {{ slurmconf('TaskPluginParam', '') -}}
 {{ slurmconf('PrologSlurmctld', '') -}}
@@ -90,6 +103,7 @@ SlurmUser=slurm
 {{ slurmconf('MaxJobCount', '10000') -}}
 {{ slurmconf('MaxStepCount', '40000') -}}
 {{ slurmconf('MaxTasksPerNode', '128') -}}
+{{ slurmconf('MaxDBDMsgs', '10000') -}}
 {{ slurmconf('UnkillableStepProgram', '') -}}
 {{ slurmconf('MpiDefault', 'none') -}}
 {{ slurmconf('MpiParams', '') -}}
@@ -97,10 +111,28 @@ SlurmUser=slurm
 {{ slurmconf('TrackWCKey', 'no') -}}
 {{ slurmconf('TreeWidth', '50') -}}
 {{ slurmconf('UsePAM', '0') -}}
+{{ slurmconf('CommunicationParameters', '') -}}
+{{ slurmconf_prefix('CoreSpecPlugin', 'none', 'core_spec') -}}
+{{ slurmconf('CpuFreqDef', '') -}}
+{{ slurmconf('CpuFreqGovernors', '') -}}
+{{ slurmconf('GpuFreqDef', '') -}}
+{{ slurmconf_prefix('LaunchType', 'slurm', 'launch') -}}
+{{ slurmconf('LaunchParameters', '') -}}
+{{ slurmconf_prefix('MCSPlugin', 'none', 'mcs') -}}
+{{ slurmconf('MCSParameters', '') -}}
+{{ slurmconf_prefix('RoutePlugin', 'default', 'route') -}}
+{{ slurmconf('MsgAggregationParams', '') -}}
+{{ slurmconf('SbcastParameters', '') -}}
+{{ slurmconf('X11Parameters', '') -}}
 
 ## HEALTH
 {{ slurmconf('HealthCheckInterval', '0') -}}
+{{ slurmconf('HealthCheckNodeState', 'ANY') -}}
 {{ slurmconf('HealthCheckProgram', '') -}}
+
+## Sensors
+{{ slurmconf_prefix('ExtSensorsType', none, 'ext_sensors') -}}
+{{ slurmconf('ExtSensorsFreq', '0') -}}
 
 ## SWITCHES
 {{ slurmconf_prefix('SwitchType', 'none', 'switch') -}}
@@ -119,11 +151,17 @@ SlurmUser=slurm
 {{ slurmconf('BatchStartTimeout','10') -}}
 {{ slurmconf('CompleteWait', '0') -}}
 {{ slurmconf('MessageTimeout', '10') -}}
+{{ slurmconf('TCPTimeout', '2') -}}
 {{ slurmconf('UnkillableStepTimeout', '60') -}}
-#EpilogMsgTime=2000
-#GetEnvTimeout=2
-#ResvOverRun=0
-#OverTimeLimit=0
+{{ slurmconf('EpilogMsgTime', '2000') -}}
+{{ slurmconf('GetEnvTimeout', '2') -}}
+{{ slurmconf('KeepAliveTime', '') -}}
+{{ slurmconf('OverTimeLimit', '0') -}}
+
+## RESERVATIONS
+{{ slurmconf('ResvOverRun', '0') -}}
+{{ slurmconf('ResvProlog', '') -}}
+{{ slurmconf('ResvEpilog', '') -}}
 
 ## SCHEDULING
 {{ slurmconf_prefix('SchedulerType','backfill', 'sched') -}}
@@ -133,12 +171,38 @@ SlurmUser=slurm
 {{ slurmconf('SchedulerParameters', '') -}}
 {{ slurmconf('SchedulerTimeSlice', '30') -}}
 {{ slurmconf('SchedulerPort', '7321') -}}
+{{ slurmconf('DefMemPerNode', '0') -}}
 {{ slurmconf('DefMemPerCPU', '0') -}}
 {{ slurmconf('MaxMemPerCPU', '0') -}}
+{{ slurmconf('DefCpuPerGPU', '0') -}}
+{{ slurmconf('DefMemPerGPU', '0') -}}
 {{ slurmconf('VSizeFactor', '0') -}}
+{{ slurmconf('AlowSpecResourceUsage', 'NO') -}}
 
 {{ slurmconf_prefix('PreemptType', 'none', 'preempt') }}
 {{ slurmconf('PreemptMode', 'OFF') }}
+{{ slurmconf('PreemptExemptTime', '0') }}
+{{ slurmconf('Licenses', '') }}
+
+{{ slurmconf_prefix('PriorityType', 'basic', 'priority') -}}
+{{ slurmconf('PriorityDecayHalfLife', '7-0') -}}
+{{ slurmconf('PriorityCalcPeriod', '5') -}}
+{{ slurmconf('PriorityFavorSmall', 'NO') -}}
+{{ slurmconf('PriorityFlags', '') -}}
+{{ slurmconf('PriorityParameters', '') -}}
+{{ slurmconf_prefix('PrioritySiteFactorPlugin', 'none', 'site_factor') -}}
+{{ slurmconf('PrioritySiteFactorParameters', '') -}}
+{{ slurmconf('PriorityMaxAge', '7-0') -}}
+{{ slurmconf('PriorityUsageResetPeriod', 'NONE') -}}
+{{ slurmconf('PriorityWeightAge', '0') -}}
+{{ slurmconf('PriorityWeightFairshare', '0') -}}
+{{ slurmconf('PriorityWeightJobSize', '0') -}}
+{{ slurmconf('PriorityWeightPartition', '0') -}}
+{{ slurmconf('PriorityWeightQOS', '0') -}}
+{{ slurmconf('PriorityWeightTRES', '') -}}
+{{ slurmconf('FairShareDampeningFactor', '1') -}}
+
+
 
 ## LOGGING
 {{ slurmconf('SlurmctldDebug', 'info') -}}
@@ -151,27 +215,13 @@ SlurmUser=slurm
 {{ slurmconf('LogTimeFormat', 'iso8601_ms') -}}
 
 {{ slurmconf_prefix('JobCompType', 'none', 'jobcomp') -}}
+{{ slurmconf('JobCompParams', '') -}}
 {{ slurmconf('JobCompLoc', '') -}}
 {{ slurmconf('JobCompHost', '') -}}
 {{ slurmconf('JobCompUser', '') -}}
 {{ slurmconf('JobCompPass', '') -}}
 {{ slurmconf('JobCompPort', '') -}}
 
-
-{{ slurmconf_prefix('PriorityType', 'basic', 'priority') -}}
-{{ slurmconf('PriorityDecayHalfLife', '7-0') -}}
-{{ slurmconf('PriorityCalcPeriod', '5') -}}
-{{ slurmconf('PriorityFavorSmall', 'NO') -}}
-{{ slurmconf('PriorityFlags', '') -}}
-{{ slurmconf('PriorityParameters', '') -}}
-{{ slurmconf('PriorityMaxAge', '7-0') -}}
-{{ slurmconf('PriorityUsageResetPeriod', 'NONE') -}}
-{{ slurmconf('PriorityWeightAge', '0') -}}
-{{ slurmconf('PriorityWeightFairshare', '0') -}}
-{{ slurmconf('PriorityWeightJobSize', '0') -}}
-{{ slurmconf('PriorityWeightPartition', '0') -}}
-{{ slurmconf('PriorityWeightQOS', '0') -}}
-{{ slurmconf('PriorityWeightTRES', '') -}}
 
 ## ACCOUNTING
 {{ slurmconf_prefix('JobAcctGatherType', 'none', 'jobacct_gather') -}}
@@ -191,13 +241,22 @@ SlurmUser=slurm
 {{ '' }}
 {{ slurmconf_prefix('AcctGatherEnergyType', 'none', 'acct_gather_energy') -}}
 {{ slurmconf('AcctGatherNodeFreq', '0') -}}
-{{ slurmconf_prefix('AcctGatherInfinibandType', 'none', 'acct_gather_infiniband') }}
-{{ slurmconf_prefix('AcctGatherFilesystemType', 'none', 'acct_gather_filesystem') }}
-{{ slurmconf_prefix('AcctGatherProfileType', 'none', 'acct_gather_profile') }}
+{{ slurmconf_prefix('AcctGatherInfinibandType', 'none', 'acct_gather_infiniband') -}}
+{{ slurmconf_prefix('AcctGatherInterconnectType', 'none', 'acct_gather_interconnect') -}}
+{{ slurmconf_prefix('AcctGatherFilesystemType', 'none', 'acct_gather_filesystem') -}}
+{{ slurmconf_prefix('AcctGatherProfileType', 'none', 'acct_gather_profile') -}}
+{{ slurmconf('DefaultStorageHost', '') -}}
+{{ slurmconf('DefaultStorageLoc', '') -}}
+{{ slurmconf('DefaultStoragePass', '') -}}
+{{ slurmconf('DefaultStoragePort', '') -}}
+{{ slurmconf('DefaultStorageType', '') -}}
+{{ slurmconf('DefaultStorageUser', '') -}}
 
 ## POWER SAVE SUPPORT FOR IDLE NODES
+{{ slurmconf('RebootProgram', '') -}}
 {{ slurmconf('SuspendProgram', '') -}}
 {{ slurmconf('ResumeProgram', '') -}}
+{{ slurmconf('ResumeFailProgram', '') -}}
 {{ slurmconf('SuspendTimeout', '') -}}
 {{ slurmconf('ResumeTimeout', '') -}}
 {{ slurmconf('ResumeRate', '') -}}
@@ -205,6 +264,10 @@ SlurmUser=slurm
 {{ slurmconf('SuspendExcParts', '') -}}
 {{ slurmconf('SuspendRate', '') -}}
 {{ slurmconf('SuspendTime', '') -}}
+{{ slurmconf_prefix('NodeFeaturesPlugin', '', 'node_features') -}}
+{{ slurmconf('PowerParameters', '') -}}
+{{ slurmconf_prefix('PowerPlugin', 'none', 'power') -}}
+
 
 ## CHECKPOINTING
 

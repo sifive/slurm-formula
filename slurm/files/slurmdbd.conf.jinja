@@ -44,8 +44,10 @@
 {{ slurmconf('ArchiveResvs', 'no') -}}
 {{ slurmconf('ArchiveSteps', 'no') -}}
 {{ slurmconf('ArchiveSuspend', 'no') -}}
+{{ slurmconf('ArchiveUsage', 'no') -}}
 
 {{ slurmconf_prefix('AuthType', 'none', 'auth') -}}
+{{ slurmconf_prefix('AuthAltTypes', 'none', 'auth') -}}
 {{ slurmconf('AuthInfo', '') -}}
 
 SlurmUser=slurm
@@ -53,16 +55,24 @@ SlurmUser=slurm
 {{ slurmconf_always('LogFile', slurm.logdir + '/slurmdbd.log') -}}
 {{ slurmconf_always('PidFile', slurm.rundir + '/slurmdbd.pid') -}}
 {{ slurmconf('DebugLevel', 'info') -}}
+{{ slurmconf('DebugLevelSyslog', 'fatal') -}}
 {{ slurmconf('DebugFlags', '') -}}
 {{ slurmconf('LogTimeFormat', 'iso8601_ms') -}}
 
 {{ slurmconf('TrackWCKey', 'no') -}}
+{{ slurmconf('TrackSlurmctldDown', 'no') -}}
+{{ slurmconf('DefaultQOS', '') -}}
+{{ slurmconf('MaxQueryTimeRange', '') -}}
+{{ slurmconf('MessageTimeout', '10') -}}
+{{ slurmconf('TCPTimeout', '2') -}}
 
 {{ slurmconf_always('DbdHost', 'localhost') -}}
 {{ slurmconf('DbdBackupHost', '') -}}
 {{ slurmconf('DbdAddr', '') -}}
 {{ slurmconf('DbdPort', '') -}}
 {{ slurmconf('CommitDelay', '0') -}}
+{{ slurmconf('Parameters', '') -}}
+{{ slurmconf('PrivateData', '') -}}
 
 {{ slurmconf_prefix_always('StorageType', 'mysql', 'accounting_storage') }}
 {{ slurmconf_always('StorageHost', 'localhost') -}}
@@ -77,4 +87,6 @@ SlurmUser=slurm
 {{ slurmconf('PurgeResvAfter', '') -}}
 {{ slurmconf('PurgeStepAfter', '') -}}
 {{ slurmconf('PurgeSuspendAfter', '') -}}
+{{ slurmconf('PurgeTXNAfter', '') -}}
+{{ slurmconf('PurgeUsageAfter', '') -}}
 
