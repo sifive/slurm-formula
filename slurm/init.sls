@@ -86,6 +86,7 @@ slurm_user:
     - system: True
     - home: /nonexistent
     - createhome: false
+    - shell: /bin/false
 {% if slurm.user_uid is defined %}
     - uid: {{ slurm.user_uid }}
 {% endif %}
