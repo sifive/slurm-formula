@@ -3,7 +3,58 @@
 # Slurm cgroup support configuration file
 #
 #--
-CgroupAutomount=yes
-CgroupReleaseAgentDir="{{slurm.etcdir}}/cgroup"
-ConstrainCores=no
-ConstrainRAMSpace=no
+
+{% set slurm_conf = salt['pillar.get']('slurm:cgroup', {}) -%}
+
+{%- macro slurmconf(field, default) -%}
+{%- if field in slurm_conf -%}
+{{field}}={{slurm_conf.get(field)}}
+{% else -%}
+# {{field}}={{default}}
+{% endif -%}
+{%- endmacro -%}
+
+{%- macro slurmconf_always(field, default) -%}
+{%- if field in slurm_conf -%}
+{{field}}={{slurm_conf.get(field)}}
+{% else -%}
+{{field}}={{default}}
+{% endif -%}
+{%- endmacro -%}
+
+{%- macro slurmconf_prefix(field, default, prefix) -%}
+{%- if field in slurm_conf -%}
+{{field}}={{prefix}}/{{slurm_conf.get(field)}}
+{% else -%}
+# {{field}}={{prefix}}/{{default}}
+{% endif -%}
+{%- endmacro -%}
+
+{%- macro slurmconf_prefix_always(field, default, prefix) -%}
+{%- if field in slurm_conf -%}
+{{field}}={{prefix}}/{{slurm_conf.get(field)}}
+{% else -%}
+{{field}}={{prefix}}/{{default}}
+{% endif -%}
+{%- endmacro -%}
+
+{{ slurmconf_always('CgroupAutomount', 'yes') -}}
+{{ slurmconf('CgroupMountpoint', '/sys/fs/cgroup') -}}
+
+{{ slurmconf('AllowedKmemSpace', '') -}}
+{{ slurmconf('AllowedRAMSpace',  '100') -}}
+{{ slurmconf('AllowedSwapSpace',  '0') -}}
+
+{{ slurmconf('ConstrainCores', 'no') -}}
+{{ slurmconf('ConstrainDevices', 'no') -}}
+{{ slurmconf('ConstrainKmemSpace', 'no') -}}
+{{ slurmconf('ConstrainRAMSpace', 'no') -}}
+{{ slurmconf('ConstrainSwapSpace', 'no') -}}
+{{ slurmconf('MaxKmempPercent', '100') -}}
+{{ slurmconf('MaxRAMPercent', '100') -}}
+{{ slurmconf('MaxSwapPercent', '100') -}}
+
+{{ slurmconf('MinKmemSpace', '30M') -}}
+{{ slurmconf('MinRAMSpace',  '30M') -}}
+
+{{ slurmconf('TaskAffinity', 'no') -}}
