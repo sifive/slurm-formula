@@ -125,7 +125,7 @@ slurm_config:
     - context:
         slurm: {{ slurm }}
     - require:
-        file: slurm_etcdir
+        - file: slurm_etcdir
 
 
 
