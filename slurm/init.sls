@@ -69,13 +69,23 @@ slurm_munge_service:
       - pkg: slurm_client
 
 {% if slurm.user_create|default(False) == True %}
+
+slurm_group:
+  group.present:
+    - name: {{ slurm.slurm_group }}
+    - system: True
+{% if slurm.user_gid is defined %}
+    - gid: {{ slurm.user_gid }}
+{% endif %}
+    - require_in:
+        - user: slurm_user
+
 slurm_user:
   user.present:
-    - name: slurm
+    - name: {{ slurm.slurm_user }}
     - system: True
-{% if slurm.homedir is defined %}
-    - home: {{ slurm.user_homedir }}
-{% endif %}
+    - home: /nonexistent
+    - createhome: false
 {% if slurm.user_uid is defined %}
     - uid: {{ slurm.user_uid }}
 {% endif %}
@@ -89,6 +99,7 @@ slurm_user:
         - file: slurm_topology
         - file: slurm_cgroup
         - file: slurm_config_energy
+
 {% endif %}
 
 slurm_client:
