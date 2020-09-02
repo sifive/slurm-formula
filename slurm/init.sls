@@ -96,9 +96,6 @@ slurm_user:
 {% endif %}
     - require_in:
         - pkg: slurm_client
-        - file: slurm_topology
-        - file: slurm_cgroup
-        - file: slurm_config_energy
 
 {% endif %}
 

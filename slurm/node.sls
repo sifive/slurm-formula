@@ -64,6 +64,9 @@ slurm_cgroup:
         slurm: {{ slurm }}
     - require:
       - file: slurm_node_state
+{% if slurm.user_create|default(False) == True %}
+      - user: slurm_user
+{% endif %}
     - require_in:
       - service: slurm_node
 {% endif %}
@@ -83,6 +86,9 @@ slurm_gres:
         gres: {{ gres }}
     - require:
       - file: slurm_node_state
+{% if slurm.user_create|default(False) == True %}
+      - user: slurm_user
+{% endif %}
     - require_in:
       - service: slurm_node
 {% endif %}
@@ -101,6 +107,9 @@ slurm_topolgy:
         slurm: {{ slurm }}
     - require:
       - pkg: slurm_client
+{% if slurm.user_create|default(False) == True %}
+      - user: slurm_user
+{% endif %}
 {% endif %}
 
 
@@ -116,6 +125,9 @@ slurm_config_energy:
         slurm: {{ slurm }}
     - require:
       - pkg: slurm_client
+{% if slurm.user_create|default(False) == True %}
+      - user: slurm_user
+{% endif %}
 
 ## X login node utilities if slurm:X is true
 
