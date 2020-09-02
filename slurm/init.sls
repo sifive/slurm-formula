@@ -107,6 +107,13 @@ slurm_client:
     - version: {{ slurm.slurm_version }}
 {% endif %}
 
+slurm_etcdir:
+  file.directory:
+    - name: {{slurm.etcdir}}
+    - user: root
+    - group: root
+    - mode: '0755'
+
 slurm_config:
   file.managed:
     - name: {{slurm.etcdir}}/slurm.conf
@@ -117,6 +124,8 @@ slurm_config:
     - source: salt://slurm/files/slurm.conf.jinja
     - context:
         slurm: {{ slurm }}
+    - require:
+        file: slurm_etcdir
 
 
 
