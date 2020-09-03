@@ -33,7 +33,7 @@
 {%- if field in slurm_conf -%}
 {{field}}={{prefix}}/{{slurm_conf.get(field)|join(','+prefix+'/')}}
 {% else -%}
-{%- if default='' -%}
+{%- if default=='' -%}
 # {{field}}=
 {% else -%}
 # {{field}}={{prefix}}/{{default}}
