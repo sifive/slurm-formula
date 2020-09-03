@@ -29,6 +29,18 @@
 {% endif -%}
 {%- endmacro -%}
 
+{%- macro slurmconf_prefix_list(field, default, prefix) -%}
+{%- if field in slurm_conf -%}
+{{field}}={{prefix}}/{{slurm_conf.get(field)|join(','+prefix+'/')}}
+{% else -%}
+{%- if default='' -%}
+# {{field}}=
+{% else -%}
+# {{field}}={{prefix}}/{{default}}
+{% endif -%}
+{%- endif -%}
+{%- endmacro -%}
+
 ## BASIC CONFIGURATION
 ClusterName={{ slurm_conf.ClusterName }}
 ControlMachine={{ slurm_conf.ControlMachine }}
@@ -72,8 +84,8 @@ SlurmUser=slurm
 {{ slurmconf('RequeueExit', '') -}}
 {{ slurmconf('RequeueExitHold', '') -}}
 {{ slurmconf('JobFileAppend', '0') -}}
-{{ slurmconf('JobSubmitPlugins', '') -}}
-{{ slurmconf('CliFilterPlugins', '') -}}
+{{ slurmconf_prefix_list('JobSubmitPlugins', '', 'job_submit') -}}
+{{ slurmconf_prefix_list('CliFilterPlugins', '', 'cli_filter') -}}
 {{ slurmconf('KillOnBadExit', '0') -}}
 {{ slurmconf('PrivateData', '') -}}
 {{ slurmconf('CacheGroups','0') -}}
@@ -91,7 +103,7 @@ SlurmUser=slurm
 {{ slurmconf('TaskProlog', '') -}}
 {{ slurmconf('TaskEpilog', '') -}}
 {{ slurmconf('PrologEpilogTimeout', '0') -}}
-{{ slurmconf_prefix('TaskPlugin', 'none', 'task') -}}
+{{ slurmconf_prefix_list('TaskPlugin', 'none', 'task') -}}
 {{ slurmconf('TaskPluginParam', '') -}}
 {{ slurmconf('PrologSlurmctld', '') -}}
 {{ slurmconf('EpilogSlurmctld', '') -}}
