@@ -158,6 +158,7 @@ slurm_srun_x_start:
 
 ## Lock down package versions (currently only on Debian)
 
+{#
 {% if slurm.slurm_version is defined and slurm.aptprefdir is defined %}
 
 slurm_aptpref_slurm:
@@ -174,3 +175,4 @@ slurm_aptpref_slurm:
     - mode: '0644'
 
 {% endif %}
+#}
