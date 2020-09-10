@@ -167,7 +167,7 @@ slurm_aptpref_slurm:
     - source: salt://slurm/files/apt.pref.jinja
     - context:
         pkgs: {{ (slurm.client_pkgs + slurm.db_pkgs + slurm.pam_pkgs + slurm.devel_pkgs + slurm.db_devel_pkgs + slurm.openlava_pkgs) | yaml }}
-	version: {{slurm.version }}
+	version: {{slurm.slurm_version }}
 	priority: '2000'
     - user: 'root'
     - group: 'root'
