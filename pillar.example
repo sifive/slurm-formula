@@ -16,7 +16,8 @@ slurm:
   AuthType: 'munge'
   CryptoType: 'munge'
   AccountingStorageType: slurmdbd
-  TaskPlugin: 'cgroup'
+  # TaskPlugin should really be TaskPlugins - it takes a list
+  TaskPlugin: ['cgroup']
   SlurmctldLogFile: '/var/log/slurm/slurmctld.log'
   AccountingStorageType: filetxt
   AccountingStorageHost: db.example.com
