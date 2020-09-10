@@ -1,0 +1,6 @@
+{% for pkg in pkgs -%}
+Package: {{ pkg }}
+Pin: version {{ version }}
+Pin-priority: {{ priority }}
+
+{% endfor -%}

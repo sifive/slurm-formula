@@ -70,6 +70,7 @@
 	'openlava_extra_pkgs': ['libswitch-perl'],
 	'pam_pkgs': ['libpam-slurm'],
 	'screen_pkgs': ['screen'],
+	'aptprefdir': '/etc/apt/preferences.d',
         },
   
   },merge=salt['pillar.get']('slurm:lookup'))

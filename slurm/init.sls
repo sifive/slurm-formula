@@ -156,3 +156,22 @@ slurm_srun_x_start:
 
 {% endif %}
 
+## Lock down package versions (currently only on Debian)
+
+{% if slurm.slurm_version is defined and slurm.aptprefdir is defined %}
+
+slurm_aptpref_slurm:
+  file.managed:
+    - name: {{slurm.aptprefdir}}/50-slurm.pref
+    - template: jinja
+    - source: salt://slurm/files/apt.pref.jinja
+    - context:
+        pkgs: {{ (client_pkgs+db_pkgs+pam_pkgs+devel_pkgs+db_devel_pkgs+openlava_pkgs) | yaml }}
+	version: {{slurm.version }}
+	priority: '2000'
+    - user: 'root'
+    - group: 'root'
+    - mode: '0644'
+    - context:
+
+{% endif %}
