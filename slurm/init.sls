@@ -65,8 +65,6 @@ slurm_munge_service:
       - pkg: slurm_munge_pkg
     - require:
       - file: slurm_munge_key
-    - require_in:
-      - pkg: slurm_client
 
 {% if slurm.user_create|default(False) == True %}
 

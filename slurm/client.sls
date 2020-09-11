@@ -13,6 +13,8 @@ slurm_client:
 {% if slurm.slurm_version is defined %}
     - version: {{ slurm.slurm_version }}
 {% endif %}
+    - require:
+      - service: slurm_munge_services
 
 slurm_config:
   file.managed:
