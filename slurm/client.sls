@@ -14,7 +14,7 @@ slurm_client:
     - version: {{ slurm.slurm_version }}
 {% endif %}
     - require:
-      - service: slurm_munge_services
+      - service: slurm_munge_service
 
 slurm_config:
   file.managed:
