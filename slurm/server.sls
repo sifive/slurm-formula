@@ -4,6 +4,7 @@
 include:
   - slurm
   - slurm.logdir
+  - slurm.client
 
 slurm_server:
   {% if slurm.server_pkgs != [] %}
