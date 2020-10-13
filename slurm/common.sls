@@ -1,4 +1,4 @@
-## SLURM common config used by DB and other stuff
+## SLURM common config used by DB and other
 
 {% from "slurm/map.jinja" import slurm with context %}
 
@@ -93,8 +93,6 @@ slurm_user:
 {% else %}
     - gid_from_name: True
 {% endif %}
-    - require_in:
-        - pkg: slurm_client
 
 {% endif %}
 
