@@ -17,6 +17,8 @@ slurm_client:
       - service: slurm_munge_service
     - require_in:
       - file: slurm_config
+    - require:
+        - user: slurm_user
 
 
 ## X login client utility if slurm:X is true
