@@ -6,7 +6,7 @@ include:
   - slurm.logdir
   - slurm.client
 
-slurm_server:
+slurm_server_pkg:
   {% if slurm.server_pkgs != [] %}
   pkg.installed:
     - names: {{ slurm.server_pkgs|yaml }}
@@ -17,6 +17,8 @@ slurm_server:
       # slurm packages require valid config else they do not start up
       - file: slurm_config
   {% endif %}
+
+slurm_server_service:
   service.running:
     - enable: True
     - name: {{ slurm.slurmctld }}
@@ -35,17 +37,17 @@ slurm_server_default:
   file.managed:
     - name: /etc/default/{{slurm.slurmctld}}
     - require:
-      - pkg: slurm_server
+      - pkg: slurm_server_pkg
     - require_in:
-      - service: slurm_server
+      - service: slurm_server_service
 
 slurm_server_state:
   file.directory:
     - name: {{slurm.slurmctlddir}}
     - require:
-        - pkg: slurm_server
+        - pkg: slurm_server_pkg
     - require_in:
-        - service: slurm_server
+        - service: slurm_server_service
     - user: {{slurm.slurm_user}}
     - group: {{slurm.slurm_group}}
     - mode: '0755'

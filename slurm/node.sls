@@ -6,7 +6,7 @@ include:
   - slurm.client
   - slurm.logdir
 
-slurm_node:
+slurm_node_pkg:
   {% if slurm.node_pkgs != [] %}
   pkg.installed:
     - names: {{ slurm.node_pkgs|yaml }}
@@ -14,6 +14,10 @@ slurm_node:
     - version: {{ slurm.slurm_version }}
   {% endif %}
   {% endif %}
+    - require_in:
+      - file: slurm_config
+
+slurm_node_service:
   service.running:
     - name: {{ slurm.slurmd }}
     - enable: True
@@ -33,17 +37,17 @@ slurm_node_default:
   file.managed:
     - name: /etc/default/{{slurm.slurmd}}
     - require:
-      - pkg: slurm_node
+      - pkg: slurm_node_pkg
     - require_in:
-      - service: slurm_node
+      - service: slurm_node_service
 
 slurm_node_state:
   file.directory:
     - name: {{slurm.slurmddir}}
     - require:
-        - pkg: slurm_node
+        - pkg: slurm_node_pkg
     - require_in:
-        - service: slurm_node
+        - service: slurm_node_service
     - user: {{slurm.slurm_user}}
     - group: {{slurm.slurm_group}}
     - mode: '0755'
@@ -68,7 +72,7 @@ slurm_cgroup:
       - user: slurm_user
 {% endif %}
     - require_in:
-      - service: slurm_node
+      - service: slurm_node_service
 {% endif %}
 
 {% set gres = salt['pillar.get']('slurm:gres') -%}
@@ -90,7 +94,7 @@ slurm_gres:
       - user: slurm_user
 {% endif %}
     - require_in:
-      - service: slurm_node
+      - service: slurm_node_service
 {% endif %}
 
 

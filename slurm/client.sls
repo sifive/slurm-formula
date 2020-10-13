@@ -15,19 +15,8 @@ slurm_client:
 {% endif %}
     - require:
       - service: slurm_munge_service
-
-slurm_config:
-  file.managed:
-    - name: {{slurm.etcdir}}/slurm.conf
-    - user: {{slurm.slurm_user}}
-    - group: root
-    - mode: '0644'
-    - template: jinja
-    - source: salt://slurm/files/slurm.conf.jinja
-    - context:
-        slurm: {{ slurm }}
-    - require:
-        - file: slurm_etcdir
+    - require_in:
+      - file: slurm_config
 
 
 ## X login client utility if slurm:X is true
