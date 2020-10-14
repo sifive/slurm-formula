@@ -3,6 +3,7 @@
 {% from "slurm/map.jinja" import slurm with context %}
 
 include:
+  - slurm.common
   - slurm
 
 ## Basic client config
