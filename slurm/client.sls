@@ -17,7 +17,7 @@ slurm_client:
     - require:
       - service: slurm_munge_service
 {% if slurm.user_create|default(False) == True %}
-        - user: slurm_user
+      - user: slurm_user
 {% endif %}
     - require_in:
       - file: slurm_config
