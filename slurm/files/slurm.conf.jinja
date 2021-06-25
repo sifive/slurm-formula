@@ -287,7 +287,7 @@ SlurmUser=slurm
 ## COMPUTE NODES
 {% if pillar['slurm']['nodes'] is defined -%}
 {%- for node, nodeinfo in pillar['slurm']['nodes'] | dictsort %}
-NodeName={{ node }} {% for key, value in nodeinfo.iteritems()  %} {{ key }}={{ value }} {% endfor -%}
+NodeName={{ node }} {% for key, value in nodeinfo.items()  %} {{ key }}={{ value }} {% endfor -%}
 {% endfor -%}
 {% endif %}
 
@@ -295,7 +295,7 @@ NodeName={{ node }} {% for key, value in nodeinfo.iteritems()  %} {{ key }}={{ v
 {% if pillar['slurm']['partitions'] is defined -%}
 {% set nodes=[] %}
 {% for partition, partinfo in pillar['slurm']['partitions'] | dictsort -%}
-PartitionName={{ partition }} {% for key, value in partinfo.iteritems() %} {% if key == 'nodes' %} Nodes={{ ','.join(value) }} {% else %}  {{ key }}={{ value }} {% endif %} {% endfor %}
+PartitionName={{ partition }} {% for key, value in partinfo.items() %} {% if key == 'nodes' %} Nodes={{ ','.join(value) }} {% else %}  {{ key }}={{ value }} {% endif %} {% endfor %}
 {% endfor -%}
 {% endif -%}
 
